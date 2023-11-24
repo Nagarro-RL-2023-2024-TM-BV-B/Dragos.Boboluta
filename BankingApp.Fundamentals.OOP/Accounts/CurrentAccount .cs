@@ -6,7 +6,7 @@ namespace BankingApp.Fundamentals.OOP.Accounts
     public class CurrentAccount : Account
     {
 
-        public StringBuilder accountTransactions = new StringBuilder();
+        public string accountTransactions = "" ;
         public CurrentAccount(string accountNumber, double initialBalance, Currency currency) : base(accountNumber, initialBalance, currency) { }
         
         public override void Deposit(double amount)
@@ -15,7 +15,7 @@ namespace BankingApp.Fundamentals.OOP.Accounts
             //add amount in balance 
             //create new transaction 
             Transaction transaction = new Transaction(this,Category.deposit,amount);
-            accountTransactions.Append("S-a facut o tranzactie " + transaction.AccountNumber.ToString());
+            accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount} in account : {transaction.AccountNumber.ToString()} in date :{transaction.DateTime}\n";
         }
 
         public override void Withdraw(double amount)
@@ -24,12 +24,12 @@ namespace BankingApp.Fundamentals.OOP.Accounts
               if (balance - amount >= 0)
               {
                 balance -= amount;
-                // minus ammount in balance  
+                // minus ammount in balance 
                 //create a transaction
                 Transaction transaction = new Transaction(this,Category.widraw, amount);
-                accountTransactions.Append("S-a facut o tranzactie " + transaction.AccountNumber.ToString());
+                accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount} in account : {transaction.AccountNumber.ToString()} in date :{transaction.DateTime}\n";
                 }
-              else
+                else
               {
                 throw new InsufficientFundsException();
               }
