@@ -14,14 +14,21 @@ namespace BankingApp.Fundamentals.OOP.Accounts
 
         public Account(string accountNumber, double initialBalance, Currency currency)
         {
-            if (!AccountNumberValidator.Validate(accountNumber))
+            try
             {
-                throw new AccountNumberException();
-            }
+                if (!AccountNumberValidator.Validate(accountNumber))
+                {
+                    throw new AccountNumberException();
+                }
 
-            this.accountNumber = accountNumber;
-            this.balance = initialBalance;
-            this.currency = currency;
+                this.accountNumber = accountNumber;
+                this.balance = initialBalance;
+                this.currency = currency;
+            }
+            catch(Exception ex) 
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
         }
 
         public abstract void Deposit(double amount);
