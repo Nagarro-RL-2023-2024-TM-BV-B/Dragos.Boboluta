@@ -9,13 +9,7 @@ namespace BankingApp.Fundamentals.OOP
         public DateTime DateTime { get; set; }
         public Category Category { get; set; } 
         public double Amount { get; set; }
-        public Transaction(Account account,double amount)
-        {
-            Id = Guid.NewGuid();
-            AccountNumber = account.AccountNumber;
-            Amount = amount;
-            DateTime = DateTime.Now;
-        }
+        
         public Transaction(Account account, Category category, double amount)
         {
             Id = Guid.NewGuid();

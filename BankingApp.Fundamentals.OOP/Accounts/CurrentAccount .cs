@@ -5,15 +5,12 @@ namespace BankingApp.Fundamentals.OOP.Accounts
 {
     public class CurrentAccount : Account
     {
-
         public string accountTransactions = "" ;
-        public CurrentAccount(string accountNumber, double initialBalance, Currency currency) : base(accountNumber, initialBalance, currency) { }
+        public CurrentAccount(string accountNumber, double initialBalance, Currency currency) : base(accountNumber, initialBalance, currency) {}
         
         public override void Deposit(double amount)
         {
             balance += amount;
-            //add amount in balance 
-            //create new transaction 
             Transaction transaction = new Transaction(this,Category.deposit,amount);
             accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount} in account : {transaction.AccountNumber.ToString()} in date :{transaction.DateTime}\n";
         }
@@ -24,8 +21,6 @@ namespace BankingApp.Fundamentals.OOP.Accounts
               if (balance - amount >= 0)
               {
                 balance -= amount;
-                // minus ammount in balance 
-                //create a transaction
                 Transaction transaction = new Transaction(this,Category.widraw, amount);
                 accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount} in account : {transaction.AccountNumber.ToString()} in date :{transaction.DateTime}\n";
                 }
