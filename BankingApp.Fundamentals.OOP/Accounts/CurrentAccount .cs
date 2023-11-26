@@ -11,7 +11,7 @@ namespace BankingApp.Fundamentals.OOP.Accounts
         {
             balance += amount;
             Transaction transaction = new Transaction(this,Category.deposit,amount);
-            accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount} in account : {transaction.AccountNumber.ToString()} in date :{transaction.DateTime}\n";
+            accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount}  in date :{transaction.DateTime}\n";
         }
 
         public override void Withdraw(double amount)
@@ -21,7 +21,7 @@ namespace BankingApp.Fundamentals.OOP.Accounts
               {
                 balance -= amount;
                 Transaction transaction = new Transaction(this,Category.widraw, amount);
-                accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount} in account : {transaction.AccountNumber.ToString()} in date :{transaction.DateTime}\n";
+                accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount} in date : {transaction.DateTime}\n";
                 }
                 else
               {

@@ -10,6 +10,8 @@ namespace BankingApp.Fundamentals.OOP
             StringBuilder reportAccount = new StringBuilder();
 
             reportAccount.Append("======================================================================\n");
+            reportAccount.Append("Transactions for the current account are : \n");
+            reportAccount.Append("======================================================================\n");
             reportAccount.Append(account.accountTransactions);
             reportAccount.Append("----------------------------------------------------------------------\n");
             reportAccount.Append("Total amount of the account is : " + account.Balance + "\n");
@@ -24,11 +26,11 @@ namespace BankingApp.Fundamentals.OOP
             string transactionLog = account.accountTransactions;
             string[] transactions = transactionLog.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            filteredTransactions.Append("Transactions filtred by type : \n");
+            filteredTransactions.Append("Transactions filtred by type for current account are : \n");
             foreach (Category type in Enum.GetValues(typeof(Category)))
             {
                 filteredTransactions.Append("======================================================================\n");
-                filteredTransactions.Append(type + " transactions on account :" + account.AccountNumber + " are :\n");
+                filteredTransactions.Append(type + " transactions on current account are :\n");
                 foreach (string transaction in transactions)
                 {
                     if (transaction.Contains(type.ToString()))
@@ -39,7 +41,7 @@ namespace BankingApp.Fundamentals.OOP
             }
             filteredTransactions.Append("======================================================================\n");
             filteredTransactions.Append("----------------------------------------------------------------------\n");
-            filteredTransactions.Append("Total amount of the account is : " + account.Balance + "\n");
+            filteredTransactions.Append("Total amount of the current account is : " + account.Balance + "\n");
             filteredTransactions.Append("======================================================================\n");
 
             Console.WriteLine(filteredTransactions.ToString() );
