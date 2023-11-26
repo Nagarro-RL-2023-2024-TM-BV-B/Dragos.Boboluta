@@ -1,5 +1,4 @@
 ﻿using BankingApp.Fundamentals.OOP.Exceptions;
-using System.Text;
 
 namespace BankingApp.Fundamentals.OOP.Accounts
 {
