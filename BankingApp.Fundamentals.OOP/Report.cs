@@ -17,10 +17,11 @@ namespace BankingApp.Fundamentals.OOP
             reportAccount.Append("======================================================================\n");
             reportAccount.Append(account.accountTransactions);
             reportAccount.Append("----------------------------------------------------------------------\n");
-            reportAccount.Append("total amount of the account is : "+account.Balance+"\n");
+            reportAccount.Append("Total amount of the account is : " + account.Balance + "\n");
             reportAccount.Append("======================================================================\n");
 
             Console.WriteLine(reportAccount.ToString() );
+            reportAccount.Clear();
         }
         public void GenerateReportPerCategories(CurrentAccount account)
         {
@@ -28,29 +29,26 @@ namespace BankingApp.Fundamentals.OOP
             string transactionLog = account.accountTransactions;
             string[] transactions = transactionLog.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            filteredTransactions.Append("======================================================================\n");
-            filteredTransactions.Append("Deposit transactions on account :" + account.AccountNumber + "are :\n");
-            foreach (string transaction in transactions)
+            filteredTransactions.Append("Transactions filtred by type : \n");
+            foreach (Category type in Enum.GetValues(typeof(Category)))
             {
-                if (transaction.Contains(Category.deposit.ToString()))
+                filteredTransactions.Append("======================================================================\n");
+                filteredTransactions.Append(type + " transactions on account :" + account.AccountNumber + " are :\n");
+                foreach (string transaction in transactions)
                 {
-                    filteredTransactions.AppendLine("  "+transaction);
-                }
-            }
-            filteredTransactions.Append("Widraw transactions on account :" + account.AccountNumber + "are :\n");
-            foreach (string transaction in transactions)
-            {
-                if (transaction.Contains(Category.widraw.ToString()))
-                {
-                    filteredTransactions.AppendLine("  " + transaction);
+                    if (transaction.Contains(type.ToString()))
+                    {
+                        filteredTransactions.AppendLine("  " + transaction);
+                    }
                 }
             }
             filteredTransactions.Append("======================================================================\n");
             filteredTransactions.Append("----------------------------------------------------------------------\n");
-            filteredTransactions.Append("total amount of the account is : " + account.Balance + "\n");
+            filteredTransactions.Append("Total amount of the account is : " + account.Balance + "\n");
             filteredTransactions.Append("======================================================================\n");
 
             Console.WriteLine(filteredTransactions.ToString() );
+            filteredTransactions.Clear();
         }
     }
 }
