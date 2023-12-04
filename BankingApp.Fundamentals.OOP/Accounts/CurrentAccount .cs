@@ -10,7 +10,7 @@ namespace BankingApp.Fundamentals.OOP.Accounts
         public override void Deposit(double amount)
         {
             balance += amount;
-            Transaction transaction = new Transaction(this,Category.deposit,amount);
+            Transaction transaction = new Transaction(this,Category.Deposit,amount);
             accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount}  in date :{transaction.DateTime}\n";
         }
 
@@ -20,7 +20,7 @@ namespace BankingApp.Fundamentals.OOP.Accounts
               if (balance - amount >= 0)
               {
                 balance -= amount;
-                Transaction transaction = new Transaction(this,Category.widraw, amount);
+                Transaction transaction = new Transaction(this,Category.Widraw, amount);
                 accountTransactions += $"A transaction of type :{transaction.Category} , amount of {transaction.Amount} in date : {transaction.DateTime}\n";
                 }
                 else

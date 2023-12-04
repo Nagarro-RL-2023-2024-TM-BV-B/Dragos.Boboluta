@@ -10,15 +10,7 @@ testAccount.Deposit(5000);
 testAccount.Withdraw(100);
 testAccount.Withdraw(200);
 
-
-//savingsAccount.Deposit(4500);
-//checkingAccount.Withdraw(600);
-
-/////savingsAccount.DisplayAccountInfo();
-//checkingAccount.DisplayAccountInfo();
-
-//call generate report method after transaction are made
-Report report = new Report();
+ReportCreator report = new ReportCreator();
 
 report.GenerateReport(testAccount);
 report.GenerateReportPerCategories(testAccount);

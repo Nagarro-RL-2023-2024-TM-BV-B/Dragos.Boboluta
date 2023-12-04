@@ -2,7 +2,7 @@
 {
    public enum Category
     {
-        deposit = 1 ,
-        widraw = 2 
+        Deposit = 1 ,
+        Widraw = 2 
     }
 }

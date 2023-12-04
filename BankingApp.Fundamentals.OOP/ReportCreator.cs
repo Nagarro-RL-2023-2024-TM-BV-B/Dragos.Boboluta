@@ -3,7 +3,7 @@ using System.Text;
 
 namespace BankingApp.Fundamentals.OOP
 {
-    public class Report
+    public class ReportCreator
     {
         public void GenerateReport(CurrentAccount account)
         {
