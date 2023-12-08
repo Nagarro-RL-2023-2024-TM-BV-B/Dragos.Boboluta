@@ -20,14 +20,16 @@ namespace BankingApp.Fundamentals.OOP.Report
             StringBuilder userCredits = new StringBuilder();
             string creditsDetails = user.Credits;
             string[] credits = creditsDetails.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+
             userCredits.Append("======================================================================\n");
-            userCredits.Append("Credits for the current user are : \n");
+            userCredits.Append("Credits for the user "+user.UserName+ " are : \n");
             userCredits.Append("======================================================================\n");
             foreach (string credit in credits)
             {
                     userCredits.AppendLine("  " + credit);
             }
             userCredits.Append("======================================================================\n");
+
             Console.WriteLine(userCredits.ToString());
             userCredits.Clear();
         }
