@@ -1,10 +1,17 @@
 ﻿using BankingApp.Fundamentals.OOP.Accounts;
+using BankingApp.Fundamentals.OOP.Entityes;
+using BankingApp.Fundamentals.OOP.Enums;
 using System.Text;
 
-namespace BankingApp.Fundamentals.OOP
+namespace BankingApp.Fundamentals.OOP.Report
 {
-    public class ReportCreator
+    public class ReportCreator : IReportCreator
     {
+        public void DisplayCreditInformation(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public void GenerateReport(CurrentAccount account)
         {
             StringBuilder reportAccount = new StringBuilder();
@@ -17,7 +24,7 @@ namespace BankingApp.Fundamentals.OOP
             reportAccount.Append("Total amount of the account is : " + account.Balance + "\n");
             reportAccount.Append("======================================================================\n");
 
-            Console.WriteLine(reportAccount.ToString() );
+            Console.WriteLine(reportAccount.ToString());
             reportAccount.Clear();
         }
         public void GenerateReportPerCategories(CurrentAccount account)
@@ -44,7 +51,7 @@ namespace BankingApp.Fundamentals.OOP
             filteredTransactions.Append("Total amount of the current account is : " + account.Balance + "\n");
             filteredTransactions.Append("======================================================================\n");
 
-            Console.WriteLine(filteredTransactions.ToString() );
+            Console.WriteLine(filteredTransactions.ToString());
             filteredTransactions.Clear();
         }
     }

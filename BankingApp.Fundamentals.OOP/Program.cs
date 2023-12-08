@@ -1,5 +1,6 @@
-﻿using BankingApp.Fundamentals.OOP;
-using BankingApp.Fundamentals.OOP.Accounts;
+﻿using BankingApp.Fundamentals.OOP.Accounts;
+using BankingApp.Fundamentals.OOP.Enums;
+using BankingApp.Fundamentals.OOP.Report;
 
 Account savingsAccount = new SavingsAccount("RO-123456", 1000, Currency.RON);
 Account checkingAccount = new CurrentAccount("DE-789012", 500, Currency.EUR);

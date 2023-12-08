@@ -1,4 +1,5 @@
-﻿using BankingApp.Fundamentals.OOP.Exceptions;
+﻿using BankingApp.Fundamentals.OOP.Enums;
+using BankingApp.Fundamentals.OOP.Exceptions;
 
 namespace BankingApp.Fundamentals.OOP.Accounts
 {

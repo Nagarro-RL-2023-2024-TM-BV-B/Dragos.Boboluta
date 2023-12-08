@@ -1,15 +1,16 @@
 ﻿using BankingApp.Fundamentals.OOP.Accounts;
+using BankingApp.Fundamentals.OOP.Enums;
 
-namespace BankingApp.Fundamentals.OOP
+namespace BankingApp.Fundamentals.OOP.Entityes
 {
     public class Transaction
     {
         public Guid Id { get; set; }
         public string AccountNumber { get; set; }
         public DateTime DateTime { get; set; }
-        public Category Category { get; set; } 
+        public Category Category { get; set; }
         public double Amount { get; set; }
-        
+
         public Transaction(Account account, Category category, double amount)
         {
             Id = Guid.NewGuid();
