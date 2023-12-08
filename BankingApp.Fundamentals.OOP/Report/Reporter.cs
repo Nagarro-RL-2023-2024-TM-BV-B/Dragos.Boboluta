@@ -13,20 +13,20 @@ namespace BankingApp.Fundamentals.OOP.Report
         private readonly ICreditService _creditService;
         public Reporter(ICreditService creditService)
         {
-            _creditService = creditService;
+            _creditService = creditService; 
         }
-        public void DisplayCreditInformation(User user )
-        {
+        public void DisplayCreditInformation(User user ) 
+        { 
             StringBuilder userCredits = new StringBuilder();
-            string creditsDetails = user.Credits;
-            string[] credits = creditsDetails.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+           
+            string[] creditDetails = _creditService.GetCreditDetails(user); 
 
             userCredits.Append("======================================================================\n");
-            userCredits.Append("Credits for the user "+user.UserName+ " are : \n");
+            userCredits.Append("Credits for the user " + user.UserName + " are : \n");
             userCredits.Append("======================================================================\n");
-            foreach (string credit in credits)
+            foreach (string credit in creditDetails)
             {
-                    userCredits.AppendLine("  " + credit);
+                userCredits.AppendLine("  " + credit);
             }
             userCredits.Append("======================================================================\n");
 

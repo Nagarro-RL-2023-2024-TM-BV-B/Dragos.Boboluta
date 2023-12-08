@@ -1,5 +1,6 @@
 ﻿using BankingApp.Fundamentals.OOP.Credit;
 using BankingApp.Fundamentals.OOP.Enums;
+using System;
 
 namespace BankingApp.Fundamentals.OOP.Entityes
 {
@@ -12,10 +13,12 @@ namespace BankingApp.Fundamentals.OOP.Entityes
         public CreditAccountDetails CreditDetails;
         public CreditAccount( double creditAmount , CreditCategory category ) 
         {
-            CreditAmount = creditAmount;
-            CreditType = category;
-            CreditId = Guid.NewGuid();
-            CreditDetails = new CreditAccountDetails(CreditType ,creditAmount);
+            
+                    CreditAmount = creditAmount;
+                    CreditType = category;
+                    CreditId = Guid.NewGuid();
+                    CreditDetails = new CreditAccountDetails(CreditType, creditAmount);
+           
 ;        }
     }
 }
