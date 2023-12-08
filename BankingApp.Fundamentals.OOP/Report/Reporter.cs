@@ -1,15 +1,22 @@
 ﻿using BankingApp.Fundamentals.OOP.Accounts;
+using BankingApp.Fundamentals.OOP.Credit;
 using BankingApp.Fundamentals.OOP.Entityes;
 using BankingApp.Fundamentals.OOP.Enums;
 using System.Text;
 
 namespace BankingApp.Fundamentals.OOP.Report
 {
-    public class ReportCreator : IReportCreator
+    public class Reporter : IReporter
     {
-        public void DisplayCreditInformation(User user)
+        private readonly ICreditService _creditService;
+        public Reporter(ICreditService creditService)
         {
-            throw new NotImplementedException();
+            _creditService = creditService;
+        }
+        public void DisplayCreditInformation(User user )
+        {
+           Console.WriteLine(user.Credits.ToString());
+
         }
 
         public void GenerateReport(CurrentAccount account)

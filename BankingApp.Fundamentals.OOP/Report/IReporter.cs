@@ -2,7 +2,7 @@
 
 namespace BankingApp.Fundamentals.OOP.Report
 {
-    public interface IReportCreator
+    public interface IReporter
     {
         void DisplayCreditInformation(User user);
     }

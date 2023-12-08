@@ -10,7 +10,6 @@ namespace BankingApp.Fundamentals.OOP.Entityes
         public DateTime DateTime { get; set; }
         public Category Category { get; set; }
         public double Amount { get; set; }
-
         public Transaction(Account account, Category category, double amount)
         {
             Id = Guid.NewGuid();
