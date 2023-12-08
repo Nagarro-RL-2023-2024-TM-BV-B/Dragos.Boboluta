@@ -21,4 +21,15 @@ using (var scope = container.BeginLifetimeScope())
     creditService.AssignCredit(user, creditAccount2);
 
     reporter.DisplayCreditInformation(user);
+
+    User user2 = new User("Dragos");
+    CreditAccount creditAccount3 = new CreditAccount(7000, CreditCategory.PersonalLoan);
+
+    CreditAccount creditAccount4 = new CreditAccount(1000, CreditCategory.HomeLoan);
+
+    creditService.AssignCredit(user2, creditAccount3);
+    creditService.AssignCredit(user2, creditAccount4);
+
+    reporter.DisplayCreditInformation(user2);
+
 }

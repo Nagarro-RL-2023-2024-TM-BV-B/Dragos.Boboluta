@@ -16,7 +16,7 @@ namespace BankingApp.Fundamentals.OOP.Entityes
             CreditAmount = creditAmount;
             CreditType = category;
             CreditId = Guid.NewGuid();
-            CreditDetails = new CreditAccountDetails("nimic momentan " , CreditType , creditAmount);
+            CreditDetails = new CreditAccountDetails(CreditType , creditAmount);
 ;        }
     }
 }
