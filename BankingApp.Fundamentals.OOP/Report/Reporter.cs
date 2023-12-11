@@ -1,6 +1,6 @@
 ﻿using BankingApp.Fundamentals.OOP.Accounts;
 using BankingApp.Fundamentals.OOP.Credit;
-using BankingApp.Fundamentals.OOP.Entityes;
+using BankingApp.Fundamentals.OOP.Entities;
 using BankingApp.Fundamentals.OOP.Enums;
 using System.Security.Principal;
 using System.Text;

@@ -1,4 +1,4 @@
-﻿namespace BankingApp.Fundamentals.OOP.Entityes
+﻿namespace BankingApp.Fundamentals.OOP.Entities
 {
     public class User
     {

@@ -1,4 +1,4 @@
-﻿using BankingApp.Fundamentals.OOP.Entityes;
+﻿using BankingApp.Fundamentals.OOP.Entities;
 using System.Text;
 
 namespace BankingApp.Fundamentals.OOP.Credit

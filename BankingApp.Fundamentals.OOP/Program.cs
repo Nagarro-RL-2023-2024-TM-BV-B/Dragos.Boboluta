@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using BankingApp.Fundamentals.OOP;
 using BankingApp.Fundamentals.OOP.Credit;
-using BankingApp.Fundamentals.OOP.Entityes;
+using BankingApp.Fundamentals.OOP.Entities;
 using BankingApp.Fundamentals.OOP.Enums;
 using BankingApp.Fundamentals.OOP.Report;
 
