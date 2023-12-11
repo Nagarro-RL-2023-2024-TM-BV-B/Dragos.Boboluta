@@ -1,7 +1,7 @@
 ﻿using BankingApp.Fundamentals.OOP.Accounts;
 using BankingApp.Fundamentals.OOP.Enums;
 
-namespace BankingApp.Fundamentals.OOP.Entityes
+namespace BankingApp.Fundamentals.OOP.Entities
 {
     public class Transaction
     {

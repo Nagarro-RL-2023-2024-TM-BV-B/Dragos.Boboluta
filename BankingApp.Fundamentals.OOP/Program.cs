@@ -8,8 +8,8 @@ using BankingApp.Fundamentals.OOP.Report;
 var container = AutofacConfig.ConfigureContainer();
 using (var scope = container.BeginLifetimeScope())
 {
-    var reporter = scope.Resolve<IReporter>();
-    var creditService = scope.Resolve<ICreditService>();
+    IReporter reporter = scope.Resolve<IReporter>();
+    ICreditService creditService = scope.Resolve<ICreditService>();
     
     User user1 = new User("Dragos");
     User user2 = new User("Daniel");

@@ -8,7 +8,7 @@ namespace BankingApp.Fundamentals.OOP
     {
         public static IContainer ConfigureContainer()
         {
-            var builder = new ContainerBuilder();
+            ContainerBuilder builder = new ContainerBuilder();
 
             builder.RegisterType<CreditService>().As<ICreditService>();
             builder.RegisterType<Reporter>().As<IReporter>();
