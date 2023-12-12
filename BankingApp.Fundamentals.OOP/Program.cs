@@ -1,16 +1,35 @@
-﻿using BankingApp.Fundamentals.OOP;
-using BankingApp.Fundamentals.OOP.Accounts;
+﻿using Autofac;
+using BankingApp.Fundamentals.OOP;
+using BankingApp.Fundamentals.OOP.Credit;
+using BankingApp.Fundamentals.OOP.Entities;
+using BankingApp.Fundamentals.OOP.Enums;
+using BankingApp.Fundamentals.OOP.Report;
 
-Account savingsAccount = new SavingsAccount("RO-123456", 1000, Currency.RON);
-Account checkingAccount = new CurrentAccount("DE-789012", 500, Currency.EUR);
+var container = AutofacConfig.ConfigureContainer();
+using (var scope = container.BeginLifetimeScope())
+{
+    IReporter reporter = scope.Resolve<IReporter>();
+    ICreditService creditService = scope.Resolve<ICreditService>();
+    
+    User user1 = new User("Dragos");
+    User user2 = new User("Daniel");
 
-CurrentAccount testAccount = new CurrentAccount("DE-789012", 0, Currency.USD);
+    CreditAccount creditAccount = new CreditAccount(2000,CreditCategory.PersonalLoan);
+    CreditAccount creditAccount2 = new CreditAccount(5000, CreditCategory.HomeLoan);
 
-testAccount.Deposit(5000);
-testAccount.Withdraw(100);
-testAccount.Withdraw(200);
+    creditService.AssignCredit(user1, creditAccount);
+    creditService.AssignCredit(user1, creditAccount2);
 
-ReportCreator report = new ReportCreator();
+    CreditAccount creditAccount3 = new CreditAccount(7000, CreditCategory.PersonalLoan);
+    CreditAccount creditAccount4 = new CreditAccount(1000, CreditCategory.HomeLoan);
+    CreditAccount creditAccount5 = new CreditAccount(500, CreditCategory.AutoLoan);
+    CreditAccount creditAccount6 = new CreditAccount(6000, CreditCategory.BusinessLoan);
 
-report.GenerateReport(testAccount);
-report.GenerateReportPerCategories(testAccount);
+    creditService.AssignCredit(user2, creditAccount3);
+    creditService.AssignCredit(user2, creditAccount4);
+    creditService.AssignCredit(user2, creditAccount5);
+    creditService.AssignCredit(user2, creditAccount6);
+
+    reporter.DisplayCreditInformation(user1);
+    reporter.DisplayCreditInformation(user2);
+}

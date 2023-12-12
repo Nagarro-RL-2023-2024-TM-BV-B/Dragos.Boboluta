@@ -1,4 +1,6 @@
-﻿using BankingApp.Fundamentals.OOP.Exceptions;
+﻿using BankingApp.Fundamentals.OOP.Entities;
+using BankingApp.Fundamentals.OOP.Enums;
+using BankingApp.Fundamentals.OOP.Exceptions;
 
 namespace BankingApp.Fundamentals.OOP.Accounts
 {
@@ -7,7 +9,7 @@ namespace BankingApp.Fundamentals.OOP.Accounts
         public string accountTransactions = "" ;
         public CurrentAccount(string accountNumber, double initialBalance, Currency currency) : base(accountNumber, initialBalance, currency) {}
         
-        public override void Deposit(double amount)
+        public override void Deposit(double amount )
         {
             balance += amount;
             Transaction transaction = new Transaction(this,Category.Deposit,amount);
