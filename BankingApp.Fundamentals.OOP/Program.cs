@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using BankingApp.Fundamentals.OOP;
+using BankingApp.Fundamentals.OOP.Accounts;
 using BankingApp.Fundamentals.OOP.Credit;
 using BankingApp.Fundamentals.OOP.Entities;
 using BankingApp.Fundamentals.OOP.Enums;
@@ -14,7 +15,13 @@ using (var scope = container.BeginLifetimeScope())
     User user1 = new User("Dragos");
     User user2 = new User("Daniel");
 
-    CreditAccount creditAccount = new CreditAccount(2000,CreditCategory.PersonalLoan);
+    Account account = new CurrentAccount("3245132",5000,Currency.RON);
+    CreditAccount creditAccount = new CreditAccount(2000, CreditCategory.PersonalLoan);
+    user1.Accounts.Add(account);
+    user1.CreditAccounts.Add(creditAccount);
+
+
+
     CreditAccount creditAccount2 = new CreditAccount(5000, CreditCategory.HomeLoan);
 
     creditService.AssignCredit(user1, creditAccount);

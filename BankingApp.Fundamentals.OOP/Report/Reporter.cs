@@ -2,9 +2,9 @@
 using BankingApp.Fundamentals.OOP.Credit;
 using BankingApp.Fundamentals.OOP.Entities;
 using BankingApp.Fundamentals.OOP.Enums;
+using System;
 using System.Security.Principal;
 using System.Text;
-using System.Transactions;
 
 namespace BankingApp.Fundamentals.OOP.Report
 {
@@ -17,64 +17,61 @@ namespace BankingApp.Fundamentals.OOP.Report
         }
         public void DisplayCreditInformation(User user ) 
         { 
-            StringBuilder userCredits = new StringBuilder();
-           
-            string[] creditDetails = _creditService.GetCreditDetails(user); 
-
-            userCredits.Append("======================================================================\n");
-            userCredits.Append("Credits for the user " + user.UserName + " are : \n");
-            userCredits.Append("======================================================================\n");
-            foreach (string credit in creditDetails)
+            List<CreditAccountDetails> creditDetails = _creditService.GetCreditDetails(user); 
+            foreach(CreditAccountDetails creditDetail in creditDetails)
             {
-                userCredits.AppendLine("  " + credit);
+                Console.WriteLine($"Credit details : {creditDetail.Details} \n");
             }
-            userCredits.Append("======================================================================\n");
-
-            Console.WriteLine(userCredits.ToString());
-            userCredits.Clear();
         }
 
         public void GenerateReport(CurrentAccount account)
         {
-            StringBuilder reportAccount = new StringBuilder();
 
-            reportAccount.Append("======================================================================\n");
-            reportAccount.Append("Transactions for the current account are : \n");
-            reportAccount.Append("======================================================================\n");
-            reportAccount.Append(account.accountTransactions);
-            reportAccount.Append("----------------------------------------------------------------------\n");
-            reportAccount.Append("Total amount of the account is : " + account.Balance + "\n");
-            reportAccount.Append("======================================================================\n");
-
-            Console.WriteLine(reportAccount.ToString());
-            reportAccount.Clear();
+            List<Transaction> transactions = account.transactionList;
+            foreach(Transaction transaction in transactions)
+            {
+                Console.WriteLine($"Account transactions: {transaction.Id} \n");
+            }
         }
         public void GenerateReportPerCategories(CurrentAccount account)
         {
-            StringBuilder filteredTransactions = new StringBuilder();
-            string transactionLog = account.accountTransactions;
-            string[] transactions = transactionLog.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-            filteredTransactions.Append("Transactions filtred by type for current account are : \n");
-            foreach (Category type in Enum.GetValues(typeof(Category)))
+            List<Transaction> transactions = account.transactionList;
+            foreach (Transaction transaction in transactions)
             {
-                filteredTransactions.Append("======================================================================\n");
-                filteredTransactions.Append(type + " transactions on current account are :\n");
-                foreach (string transaction in transactions)
+                if(transaction.Category == Category.Deposit)
                 {
-                    if (transaction.Contains(type.ToString()))
-                    {
-                        filteredTransactions.AppendLine("  " + transaction);
-                    }
+                    Console.WriteLine($"A Deposit transaction :{transaction.Id}");
+                }else if(transaction.Category == Category.Widraw)
+                {
+                    Console.WriteLine($"A Widraw transaction : {transaction.Id}");
                 }
             }
-            filteredTransactions.Append("======================================================================\n");
-            filteredTransactions.Append("----------------------------------------------------------------------\n");
-            filteredTransactions.Append("Total amount of the current account is : " + account.Balance + "\n");
-            filteredTransactions.Append("======================================================================\n");
+        }
+        //1. Get all transactions for a specific user
 
-            Console.WriteLine(filteredTransactions.ToString());
-            filteredTransactions.Clear();
+        public void GetAllTransactions(User user)
+        {
+
+        }
+        //2. Get transactions for a specific user and category
+        public void GetTransactionsForSpecificCategory(Category category,User user)
+        { 
+
+        }
+        //3. Get transactions for s specific date(start date, end date)
+        public void GetTransactionsForSpecificDate(DateTime startDate ,DateTime endDate)
+        {
+
+        }
+        //4. Get transactions which amount is lower than 1000 (currency)
+        public void GetTransactionsAmountLowerThan(User user)
+        {
+
+        }
+        //5. Get transactions which amount is between a specific range.
+        public void GetTransactionWithAmountBetweenARange(double minimum,double maximum)
+        {
+
         }
     }
 }
