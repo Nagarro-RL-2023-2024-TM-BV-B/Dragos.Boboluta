@@ -13,11 +13,12 @@ using (var scope = container.BeginLifetimeScope())
     ICreditService creditService = scope.Resolve<ICreditService>();
     
     User user1 = new User("Dragos");
-
     Account account = new CurrentAccount("3245132",5000,Currency.RON);
-    user1.Accounts.Add(account);
-
     CreditAccount creditAccount = new CreditAccount(2000, CreditCategory.PersonalLoan);
+    DateTime startDate = DateTime.Now.Add(new TimeSpan(-1, 0, 0));
+    DateTime endDate = DateTime.Now.Add(new TimeSpan(1, 0, 0));
+
+    user1.Accounts.Add(account);
     user1.CreditAccounts.Add(creditAccount);
 
     account.Withdraw(100);
@@ -28,12 +29,10 @@ using (var scope = container.BeginLifetimeScope())
     account.Deposit(150);
     
     reporter.DisplayCreditInformation(user1);
-
     reporter.DisplayAllTransactions(user1);
-    
     reporter.DisplayTransactionsAmountLowerThan(user1);
     reporter.DisplayTransactionsForSpecificCategory(Category.Widraw, user1);
     reporter.DisplayTransactionWithAmountBetweenARange(100, 400, user1);
-    reporter.DisplayTransactionsForSpecificDatePeriod(DateTime.Now.Add(new TimeSpan(-1, 0, 0)), DateTime.Now.Add(new TimeSpan(1, 0, 0)),user1);
+    reporter.DisplayTransactionsForSpecificDatePeriod(startDate,endDate,user1);
     
 }

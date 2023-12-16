@@ -64,7 +64,6 @@ namespace BankingApp.Fundamentals.OOP.Report
             {
                 List<Transaction> transactions = GetAllTransactions(user);
                 if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now \n");
-
                 Console.WriteLine($"Transactions of type {category} for user {user.UserName} are :\n");
                 List<Transaction> filtredTransactions = transactions.Where(x => x.Category == category).ToList();
 
