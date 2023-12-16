@@ -7,8 +7,8 @@ namespace BankingApp.Fundamentals.OOP.Report
         void DisplayCreditInformation(User user);
         void GetAllTransactions(User user);
         void GetTransactionsForSpecificCategory(Category category, User user);
-        void GetTransactionsForSpecificDate(DateTime startDate, DateTime endDate);
+        void GetTransactionsForSpecificDate(DateTime startDate, DateTime endDate, User user);
         void GetTransactionsAmountLowerThan(User user);
-        void GetTransactionWithAmountBetweenARange(double minimum, double maximum);
+        void GetTransactionWithAmountBetweenARange(double minimum, double maximum, User user);
     }
 }

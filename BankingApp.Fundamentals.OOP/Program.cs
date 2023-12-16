@@ -13,30 +13,28 @@ using (var scope = container.BeginLifetimeScope())
     ICreditService creditService = scope.Resolve<ICreditService>();
     
     User user1 = new User("Dragos");
-    User user2 = new User("Daniel");
 
     Account account = new CurrentAccount("3245132",5000,Currency.RON);
-    CreditAccount creditAccount = new CreditAccount(2000, CreditCategory.PersonalLoan);
     user1.Accounts.Add(account);
+
+    CreditAccount creditAccount = new CreditAccount(2000, CreditCategory.PersonalLoan);
     user1.CreditAccounts.Add(creditAccount);
 
+    account.Withdraw(100);
+    account.Withdraw(500);
+    account.Deposit(600);
+    account.Deposit(5000);
+    account.Withdraw(5300);
+    account.Deposit(150);
 
-
-    CreditAccount creditAccount2 = new CreditAccount(5000, CreditCategory.HomeLoan);
-
-    creditService.AssignCredit(user1, creditAccount);
-    creditService.AssignCredit(user1, creditAccount2);
-
-    CreditAccount creditAccount3 = new CreditAccount(7000, CreditCategory.PersonalLoan);
-    CreditAccount creditAccount4 = new CreditAccount(1000, CreditCategory.HomeLoan);
-    CreditAccount creditAccount5 = new CreditAccount(500, CreditCategory.AutoLoan);
-    CreditAccount creditAccount6 = new CreditAccount(6000, CreditCategory.BusinessLoan);
-
-    creditService.AssignCredit(user2, creditAccount3);
-    creditService.AssignCredit(user2, creditAccount4);
-    creditService.AssignCredit(user2, creditAccount5);
-    creditService.AssignCredit(user2, creditAccount6);
 
     reporter.DisplayCreditInformation(user1);
-    reporter.DisplayCreditInformation(user2);
+
+    reporter.GetAllTransactions(user1);
+    reporter.GetTransactionsAmountLowerThan(user1);
+    reporter.GetTransactionsForSpecificCategory(Category.Widraw, user1);
+    reporter.GetTransactionWithAmountBetweenARange(100, 400, user1);
+
+
+
 }

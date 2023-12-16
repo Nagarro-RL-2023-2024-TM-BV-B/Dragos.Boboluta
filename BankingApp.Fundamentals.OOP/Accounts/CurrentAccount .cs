@@ -7,7 +7,7 @@ namespace BankingApp.Fundamentals.OOP.Accounts
     public class CurrentAccount : Account
     {
         public string accountTransactions = "" ;
-        public List<Transaction> transactionList ;
+        public List<Transaction> transactionList = new List<Transaction>();
         public CurrentAccount(string accountNumber, double initialBalance, Currency currency) : base(accountNumber, initialBalance, currency) {}
         
         public override void Deposit(double amount )
