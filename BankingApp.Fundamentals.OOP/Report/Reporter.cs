@@ -150,6 +150,7 @@ namespace BankingApp.Fundamentals.OOP.Report
         {
             try
             {
+                if (minimum >= maximum) throw new Exception(" Invalid amount range , please enter a valid amount range \n");
                 List<Transaction> transactions = GetAllTransactions(user);
                 if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now \n");
 
