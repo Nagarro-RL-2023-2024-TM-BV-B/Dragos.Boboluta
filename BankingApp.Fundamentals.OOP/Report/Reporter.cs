@@ -89,7 +89,7 @@ namespace BankingApp.Fundamentals.OOP.Report
         {
             try
             {
-                if(startDate>=endDate) throw new Exception($"Invalid date period , please enter a valid start and end date \n");
+                if(startDate >= endDate) throw new Exception($"Invalid date period , please enter a valid start and end date \n");
                 List<Transaction> transactions = GetAllTransactions(user);
                 if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now \n");
 
