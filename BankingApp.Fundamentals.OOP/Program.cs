@@ -26,15 +26,14 @@ using (var scope = container.BeginLifetimeScope())
     account.Deposit(5000);
     account.Withdraw(5300);
     account.Deposit(150);
-
-
+    
     reporter.DisplayCreditInformation(user1);
 
-    reporter.GetAllTransactions(user1);
-    reporter.GetTransactionsAmountLowerThan(user1);
-    reporter.GetTransactionsForSpecificCategory(Category.Widraw, user1);
-    reporter.GetTransactionWithAmountBetweenARange(100, 400, user1);
-
-
-
+    reporter.DisplayAllTransactions(user1);
+    
+    reporter.DisplayTransactionsAmountLowerThan(user1);
+    reporter.DisplayTransactionsForSpecificCategory(Category.Widraw, user1);
+    reporter.DisplayTransactionWithAmountBetweenARange(100, 400, user1);
+    reporter.DisplayTransactionsForSpecificDatePeriod(DateTime.Now.Add(new TimeSpan(-1, 0, 0)), DateTime.Now.Add(new TimeSpan(1, 0, 0)),user1);
+    
 }
