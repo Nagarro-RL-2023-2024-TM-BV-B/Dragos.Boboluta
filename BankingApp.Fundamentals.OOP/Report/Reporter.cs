@@ -50,7 +50,7 @@ namespace BankingApp.Fundamentals.OOP.Report
 
                 foreach (Transaction transaction in transactions)
                 {
-                    Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime.ToShortTimeString()} and  \n");
+                    Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
                 }
             }
             catch (Exception ex) 
@@ -72,7 +72,7 @@ namespace BankingApp.Fundamentals.OOP.Report
 
                     foreach (Transaction transaction in filtredTransactions)
                     {
-                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime.ToShortTimeString()} and  \n");
+                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
                     }
                 }
                 else
@@ -99,7 +99,7 @@ namespace BankingApp.Fundamentals.OOP.Report
                 {
                     foreach (Transaction transaction in filtredTransactions)
                     {
-                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime.ToShortTimeString()} and  \n");
+                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
                     }
                 }
                 else
@@ -132,7 +132,7 @@ namespace BankingApp.Fundamentals.OOP.Report
                 {
                     foreach (Transaction transaction in filtredTransactions)
                     {
-                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime.ToShortTimeString()} and  \n");
+                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
                     }
                 }
                 else
@@ -167,7 +167,7 @@ namespace BankingApp.Fundamentals.OOP.Report
                 {
                     foreach (Transaction transaction in filtredTransactions)
                     {
-                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime.ToShortTimeString()} and  \n");
+                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
                     }
                 }
                 else

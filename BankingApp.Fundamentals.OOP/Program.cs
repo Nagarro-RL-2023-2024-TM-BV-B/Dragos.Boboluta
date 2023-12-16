@@ -14,11 +14,13 @@ using (var scope = container.BeginLifetimeScope())
     
     User user1 = new User("Dragos");
     Account account = new CurrentAccount("3245132",5000,Currency.RON);
+    Account account2 = new CurrentAccount("1245132", 7000, Currency.RON);
     CreditAccount creditAccount = new CreditAccount(2000, CreditCategory.PersonalLoan);
     DateTime startDate = DateTime.Now.Add(new TimeSpan(-1, 0, 0));
     DateTime endDate = DateTime.Now.Add(new TimeSpan(1, 0, 0));
 
     user1.Accounts.Add(account);
+    user1.Accounts.Add(account2);
     user1.CreditAccounts.Add(creditAccount);
 
     account.Withdraw(100);
@@ -27,7 +29,9 @@ using (var scope = container.BeginLifetimeScope())
     account.Deposit(5000);
     account.Withdraw(5300);
     account.Deposit(150);
-    
+    account2.Withdraw(99);
+    account2.Deposit(150);
+
     reporter.DisplayCreditInformation(user1);
     reporter.DisplayAllTransactions(user1);
     reporter.DisplayTransactionsAmountLowerThan(user1);
