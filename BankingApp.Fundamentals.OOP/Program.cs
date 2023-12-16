@@ -16,8 +16,8 @@ using (var scope = container.BeginLifetimeScope())
     Account account = new CurrentAccount("3245132",5000,Currency.RON);
     Account account2 = new CurrentAccount("1245132", 7000, Currency.RON);
     CreditAccount creditAccount = new CreditAccount(2000, CreditCategory.PersonalLoan);
-    DateTime startDate = DateTime.Now.AddDays(1);
-    DateTime endDate = DateTime.Now.AddDays(-1);
+    DateTime startDate = DateTime.Now.AddDays(-1);
+    DateTime endDate = DateTime.Now.AddDays(1);
 
     user1.Accounts.Add(account);
     user1.Accounts.Add(account2);
