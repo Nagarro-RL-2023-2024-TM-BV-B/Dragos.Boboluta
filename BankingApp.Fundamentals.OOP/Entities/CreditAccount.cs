@@ -13,12 +13,10 @@ namespace BankingApp.Fundamentals.OOP.Entities
         public CreditAccountDetails CreditDetails;
         public CreditAccount( double creditAmount , CreditCategory category ) 
         {
-            
                     CreditAmount = creditAmount;
                     CreditType = category;
                     CreditId = Guid.NewGuid();
                     CreditDetails = new CreditAccountDetails(CreditType, creditAmount);
-           
 ;        }
     }
 }

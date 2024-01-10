@@ -1,10 +1,6 @@
 ﻿using BankingApp.Fundamentals.OOP.Accounts;
 using BankingApp.Fundamentals.OOP.Credit;
 using BankingApp.Fundamentals.OOP.Entities;
-using BankingApp.Fundamentals.OOP.Enums;
-using System.Security.Principal;
-using System.Text;
-using System.Transactions;
 
 namespace BankingApp.Fundamentals.OOP.Report
 {
@@ -15,66 +11,174 @@ namespace BankingApp.Fundamentals.OOP.Report
         {
             _creditService = creditService; 
         }
-        public void DisplayCreditInformation(User user ) 
-        { 
-            StringBuilder userCredits = new StringBuilder();
-           
-            string[] creditDetails = _creditService.GetCreditDetails(user); 
-
-            userCredits.Append("======================================================================\n");
-            userCredits.Append("Credits for the user " + user.UserName + " are : \n");
-            userCredits.Append("======================================================================\n");
-            foreach (string credit in creditDetails)
-            {
-                userCredits.AppendLine("  " + credit);
-            }
-            userCredits.Append("======================================================================\n");
-
-            Console.WriteLine(userCredits.ToString());
-            userCredits.Clear();
-        }
-
-        public void GenerateReport(CurrentAccount account)
+        public void DisplayCreditInformation(User user )
         {
-            StringBuilder reportAccount = new StringBuilder();
-
-            reportAccount.Append("======================================================================\n");
-            reportAccount.Append("Transactions for the current account are : \n");
-            reportAccount.Append("======================================================================\n");
-            reportAccount.Append(account.accountTransactions);
-            reportAccount.Append("----------------------------------------------------------------------\n");
-            reportAccount.Append("Total amount of the account is : " + account.Balance + "\n");
-            reportAccount.Append("======================================================================\n");
-
-            Console.WriteLine(reportAccount.ToString());
-            reportAccount.Clear();
-        }
-        public void GenerateReportPerCategories(CurrentAccount account)
-        {
-            StringBuilder filteredTransactions = new StringBuilder();
-            string transactionLog = account.accountTransactions;
-            string[] transactions = transactionLog.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-            filteredTransactions.Append("Transactions filtred by type for current account are : \n");
-            foreach (Category type in Enum.GetValues(typeof(Category)))
+            try
             {
-                filteredTransactions.Append("======================================================================\n");
-                filteredTransactions.Append(type + " transactions on current account are :\n");
-                foreach (string transaction in transactions)
+                List<CreditAccountDetails> creditDetails = _creditService.GetCreditDetails(user);
+                if(creditDetails.Count == 0) throw new Exception($"User {user.UserName} doesn't have any credits until now \n");
+                foreach (CreditAccountDetails creditDetail in creditDetails)
                 {
-                    if (transaction.Contains(type.ToString()))
-                    {
-                        filteredTransactions.AppendLine("  " + transaction);
-                    }
+                    Console.WriteLine($"Credit details : {creditDetail.Details} \n");
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        private List<Transaction> GetAllTransactions(User user)
+        {
+            List<Transaction> transactions = new List<Transaction>();
+
+            foreach (CurrentAccount account in user.Accounts)
+            {
+                foreach (Transaction transaction in account.transactionList)
+                {
+                    transactions.Add(transaction);
                 }
             }
-            filteredTransactions.Append("======================================================================\n");
-            filteredTransactions.Append("----------------------------------------------------------------------\n");
-            filteredTransactions.Append("Total amount of the current account is : " + account.Balance + "\n");
-            filteredTransactions.Append("======================================================================\n");
+            return transactions;
+        }
 
-            Console.WriteLine(filteredTransactions.ToString());
-            filteredTransactions.Clear();
+        public void DisplayAllTransactions(User user)
+        {
+            try
+            {
+                List<Transaction> transactions = GetAllTransactions(user);
+                if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now \n");
+                Console.WriteLine($"Transactions for user {user.UserName} are :\n");
+
+                foreach (Transaction transaction in transactions)
+                {
+                    Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
+                }
+            }
+            catch (Exception ex) 
+            { 
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public void DisplayTransactionsForSpecificCategory(Category category,User user)
+        {
+            try 
+            {
+                List<Transaction> transactions = GetAllTransactions(user);
+                if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now \n");
+                Console.WriteLine($"Transactions of type {category} for user {user.UserName} are :\n");
+                List<Transaction> filtredTransactions = transactions.Where(x => x.Category == category).ToList();
+
+                if (filtredTransactions.Count > 0)
+                {
+
+                    foreach (Transaction transaction in filtredTransactions)
+                    {
+                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($" User {user.UserName} doesn'n have any transactions of type {category} \n");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public void DisplayTransactionsForSpecificDatePeriod(DateTime startDate ,DateTime endDate,User user)
+        {
+            try
+            {
+                if(startDate >= endDate) throw new Exception($"Invalid date period , please enter a valid start and end date \n");
+                List<Transaction> transactions = GetAllTransactions(user);
+                if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now \n");
+
+                List<Transaction> filtredTransactions = transactions.Where(x => x.DateTime >= startDate && x.DateTime <= endDate).ToList();
+                Console.WriteLine($"Transactions  for user {user.UserName} made between {startDate.ToShortDateString()} and {endDate.ToShortDateString()} are  :\n");
+                if (filtredTransactions.Count > 0)
+                {
+                    foreach (Transaction transaction in filtredTransactions)
+                    {
+                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($" User {user.UserName} doesn'n have any transactions made between {startDate} and {endDate} \n");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public void DisplayTransactionsAmountLowerThan(User user)
+        {
+            try
+            {
+                List<Transaction> transactions = GetAllTransactions(user);
+                if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now \n");
+
+                foreach (CurrentAccount account in user.Accounts)
+                {
+                    foreach (Transaction transaction in account.transactionList)
+                    {
+                        transactions.Add(transaction);
+                    }
+                }
+                List<Transaction> filtredTransactions = transactions.Where(x => x.Amount < 1000).ToList();
+                Console.WriteLine($"Transactions  for user {user.UserName} with amount less than 1000 are  : \n");
+                if (transactions.Count > 0)
+                {
+                    foreach (Transaction transaction in filtredTransactions)
+                    {
+                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($" User {user.UserName} doesn'n have any transactions with amount lower than 1000 \n");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public void DisplayTransactionWithAmountBetweenARange(double minimum,double maximum,User user)
+        {
+            try
+            {
+                if (minimum >= maximum) throw new Exception(" Invalid amount range , please enter a valid amount range \n");
+                List<Transaction> transactions = GetAllTransactions(user);
+                if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now \n");
+
+                foreach (CurrentAccount account in user.Accounts)
+                {
+                    foreach (Transaction transaction in account.transactionList)
+                    {
+                        transactions.Add(transaction);
+                    }
+                }
+                List<Transaction> filtredTransactions = transactions.Where(x => x.Amount >= minimum && x.Amount <= maximum).ToList();
+
+                Console.WriteLine($"Transactions  for user {user.UserName} with amount between {minimum} and {maximum} are  : \n");
+                if (filtredTransactions.Count > 0)
+                {
+                    foreach (Transaction transaction in filtredTransactions)
+                    {
+                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}  \n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($" User {user.UserName} doesn'n have any transactions with amount between {minimum} and {maximum} \n");
+                }
+            }
+            catch (Exception ex) 
+            { 
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

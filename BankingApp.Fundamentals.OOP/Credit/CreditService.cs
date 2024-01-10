@@ -11,13 +11,16 @@ namespace BankingApp.Fundamentals.OOP.Credit
                     creditAccount.AccountId = user.UserId;  
                     user.Credits += creditAccount.CreditDetails.Details;
         }
-        public string[] GetCreditDetails(User user)
+        public List<CreditAccountDetails> GetCreditDetails(User user)
         {
-            string creditsDetails = user.Credits;
-            string[] credits = creditsDetails.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            List<CreditAccount>  creditAccounts = user.CreditAccounts;
+            List<CreditAccountDetails> creditDetails = new List<CreditAccountDetails>();
+            foreach(CreditAccount creditAccount in creditAccounts)
+            {
+                creditDetails.Add(creditAccount.CreditDetails);
+            }
 
-
-            return credits;
+            return creditDetails;
         }
     }
 }

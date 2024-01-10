@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using BankingApp.Fundamentals.OOP;
+using BankingApp.Fundamentals.OOP.Accounts;
 using BankingApp.Fundamentals.OOP.Credit;
 using BankingApp.Fundamentals.OOP.Entities;
 using BankingApp.Fundamentals.OOP.Enums;
@@ -12,24 +13,30 @@ using (var scope = container.BeginLifetimeScope())
     ICreditService creditService = scope.Resolve<ICreditService>();
     
     User user1 = new User("Dragos");
-    User user2 = new User("Daniel");
+    Account account = new CurrentAccount("3245132",5000,Currency.RON);
+    Account account2 = new CurrentAccount("1245132", 7000, Currency.RON);
+    CreditAccount creditAccount = new CreditAccount(2000, CreditCategory.PersonalLoan);
+    DateTime startDate = DateTime.Now.AddDays(-1);
+    DateTime endDate = DateTime.Now.AddDays(1);
 
-    CreditAccount creditAccount = new CreditAccount(2000,CreditCategory.PersonalLoan);
-    CreditAccount creditAccount2 = new CreditAccount(5000, CreditCategory.HomeLoan);
+    user1.Accounts.Add(account);
+    user1.Accounts.Add(account2);
+    user1.CreditAccounts.Add(creditAccount);
 
-    creditService.AssignCredit(user1, creditAccount);
-    creditService.AssignCredit(user1, creditAccount2);
-
-    CreditAccount creditAccount3 = new CreditAccount(7000, CreditCategory.PersonalLoan);
-    CreditAccount creditAccount4 = new CreditAccount(1000, CreditCategory.HomeLoan);
-    CreditAccount creditAccount5 = new CreditAccount(500, CreditCategory.AutoLoan);
-    CreditAccount creditAccount6 = new CreditAccount(6000, CreditCategory.BusinessLoan);
-
-    creditService.AssignCredit(user2, creditAccount3);
-    creditService.AssignCredit(user2, creditAccount4);
-    creditService.AssignCredit(user2, creditAccount5);
-    creditService.AssignCredit(user2, creditAccount6);
+    account.Withdraw(100);
+    account.Withdraw(500);
+    account.Deposit(600);
+    account.Deposit(5000);
+    account.Withdraw(5300);
+    account.Deposit(150);
+    account2.Withdraw(99);
+    account2.Deposit(150);
 
     reporter.DisplayCreditInformation(user1);
-    reporter.DisplayCreditInformation(user2);
+    reporter.DisplayAllTransactions(user1);
+    reporter.DisplayTransactionsAmountLowerThan(user1);
+    reporter.DisplayTransactionsForSpecificCategory(Category.Widraw, user1);
+    reporter.DisplayTransactionWithAmountBetweenARange(100, 400, user1);
+    reporter.DisplayTransactionsForSpecificDatePeriod(startDate,endDate,user1);
+    
 }
