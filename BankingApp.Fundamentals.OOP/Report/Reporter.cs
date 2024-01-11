@@ -165,17 +165,25 @@ namespace BankingApp.Fundamentals.OOP.Report
                     }
                 }
                 List<Transaction> filtredTransactions = transactions.Where(x => x.Amount < 1000).ToList();
-                Console.WriteLine($"Transactions  for user {user.UserName} with amount less than 1000 are  :  ");
-                if (transactions.Count > 0)
+                string text = "";
+                using (StreamWriter raportWriter = new StreamWriter(raportFile))
                 {
-                    foreach (Transaction transaction in filtredTransactions)
+                    Console.WriteLine($"Transactions  for user {user.UserName} with amount less than 1000 are  :  ");
+                    raportWriter.WriteLine($"Transactions  for user {user.UserName} with amount less than 1000 are  :  ");
+
+                    if (transactions.Count > 0)
                     {
-                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}   ");
+                        foreach (Transaction transaction in filtredTransactions)
+                        {
+                            text = $" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}   ";
+                            Console.WriteLine(text);
+                            raportWriter.WriteLine(text);
+                        }
                     }
-                }
-                else
-                {
-                    Console.WriteLine($" User {user.UserName} doesn'n have any transactions with amount lower than 1000  ");
+                    else
+                    {
+                        Console.WriteLine($" User {user.UserName} doesn'n have any transactions with amount lower than 1000  ");
+                    }
                 }
             }
             catch(Exception ex)
