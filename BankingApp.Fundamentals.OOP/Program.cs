@@ -69,7 +69,8 @@ using (var scope = container.BeginLifetimeScope())
             testAccount.Withdraw(500);
             testAccount.Deposit(600);
 
-           var report =  reporter.DisplayAllTransactions(test);
+           //reporter.DisplayAllTransactions(test);
+        reporter.DisplayTransactionsForSpecificCategory(Category.Widraw, test);
 
     }
     catch (Exception ex)

@@ -4,37 +4,40 @@ using BankingApp.Fundamentals.OOP.Entities;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BankingApp.Fundamentals.OOP.Report
 {
     public class Reporter : IReporter
     {
+        private  string raportFile = "Raports.json";
+ 
         private readonly ICreditService _creditService;
         public  StringBuilder StringBuilder = new StringBuilder();
         public Reporter(ICreditService creditService)
         {
             _creditService = creditService; 
         }
-        public string DisplayCreditInformation(User user )
+        public void DisplayCreditInformation(User user )
         {
             try
             {
-                List<CreditAccountDetails> creditDetails = _creditService.GetCreditDetails(user);
-                if(creditDetails.Count == 0) throw new Exception($"User {user.UserName} doesn't have any credits until now  ");
-                foreach (CreditAccountDetails creditDetail in creditDetails)
+                using (StreamWriter raportWriter = new StreamWriter(raportFile))
                 {
-                    StringBuilder.Append($"Credit details : {creditDetail.Details} | ");
+                    List<CreditAccountDetails> creditDetails = _creditService.GetCreditDetails(user);
+                    if (creditDetails.Count == 0) throw new Exception($"User {user.UserName} doesn't have any credits until now  ");
+                    foreach (CreditAccountDetails creditDetail in creditDetails)
+                    {
+                        string text = $"Credit details : {creditDetail.Details} ";
+                        raportWriter.WriteLine(text);
+                        Console.WriteLine(text);
+                    }
                 }
-                return StringBuilder.ToString();
             }catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
-            finally
-            {
-                StringBuilder.Clear();
-            }
+          
         }
         private List<Transaction> GetAllTransactions(User user)
         {
@@ -50,79 +53,69 @@ namespace BankingApp.Fundamentals.OOP.Report
             return transactions;
         }
 
-        public async Task<string> DisplayAllTransactions(User user)
+        public void  DisplayAllTransactions(User user)
         {
             try
             {
-                var raportFile = "Raports.json";
-
                 using (StreamWriter raportWriter = new StreamWriter(raportFile))
                 {
                     List<Transaction> transactions = GetAllTransactions(user);
                     if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now  ");
                     Console.WriteLine($"Transactions for user {user.UserName} are : ");
-
+                    raportWriter.WriteLine($"Transactions for user {user.UserName} are : ");
+                    string text = "";
                     foreach (Transaction transaction in transactions)
                     {
-                        var text = $" A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime} ;";
+                        text = $" A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime} ;";
                         Console.WriteLine($" => {text}");
                         raportWriter.WriteLine(text); 
-
-                        StringBuilder.Append($"{text} {Environment.NewLine}");
                     }
                 }
 
-                return StringBuilder.ToString();
             }
             catch (Exception ex)
             {
-                // Tratează excepțiile aici
                 Console.WriteLine($"Error: {ex.Message}");
-                return string.Empty;
-            }
-
-
-            finally
-            {
-                StringBuilder.Clear();
             }
         }
-        public string DisplayTransactionsForSpecificCategory(Category category,User user)
+        public void DisplayTransactionsForSpecificCategory(Category category,User user)
         {
             try 
             {
-                List<Transaction> transactions = GetAllTransactions(user);
-                if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now  ");
-                Console.WriteLine($"Transactions of type {category} for user {user.UserName} are : ");
-                List<Transaction> filtredTransactions = transactions.Where(x => x.Category == category).ToList();
-
-                if (filtredTransactions.Count > 0)
+                using (StreamWriter raportWriter = new StreamWriter(raportFile))
                 {
+                    List<Transaction> transactions = GetAllTransactions(user);
+                    if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now  ");
+                    Console.WriteLine($"Transactions of type {category} for user {user.UserName} are : ");
+                    raportWriter.WriteLine($"Transactions of type {category} for user {user.UserName} are : ");
+                    List<Transaction> filtredTransactions = transactions.Where(x => x.Category == category).ToList();
+                    string text = "";
 
-                    foreach (Transaction transaction in filtredTransactions)
+                    if (filtredTransactions.Count > 0)
                     {
 
-                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}   ");
+                        foreach (Transaction transaction in filtredTransactions)
+                        {
+                            text = $" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}   ";
+                            raportWriter.WriteLine(text);
+                            Console.WriteLine(text);
+                        }
+                    }
+
+                    else
+                    {
+                        Console.WriteLine($" User {user.UserName} doesn'n have any transactions of type {category}  ");
                     }
                 }
-                else
-                {
-                    Console.WriteLine($" User {user.UserName} doesn'n have any transactions of type {category}  ");
-                }
-                return StringBuilder.ToString();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
 
-            finally
-            {
-                StringBuilder.Clear();
-            }
+          
         }
-        public string DisplayTransactionsForSpecificDatePeriod(DateTime startDate ,DateTime endDate,User user)
+        public void DisplayTransactionsForSpecificDatePeriod(DateTime startDate ,DateTime endDate,User user)
         {
             try
             {
@@ -143,19 +136,14 @@ namespace BankingApp.Fundamentals.OOP.Report
                 {
                     Console.WriteLine($" User {user.UserName} doesn'n have any transactions made between {startDate} and {endDate}  ");
                 }
-                return StringBuilder.ToString() ;
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
-            finally
-            {
-                StringBuilder.Clear();
-            }
+           
         }
-        public string DisplayTransactionsAmountLowerThan(User user)
+        public void DisplayTransactionsAmountLowerThan(User user)
         {
             try
             {
@@ -182,20 +170,15 @@ namespace BankingApp.Fundamentals.OOP.Report
                 {
                     Console.WriteLine($" User {user.UserName} doesn'n have any transactions with amount lower than 1000  ");
                 }
-                return StringBuilder.ToString();
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
 
-            finally
-            {
-                StringBuilder.Clear();
-            }
+           
         }
-        public string DisplayTransactionWithAmountBetweenARange(double minimum,double maximum,User user)
+        public void DisplayTransactionWithAmountBetweenARange(double minimum,double maximum,User user)
         {
             try
             {
@@ -224,18 +207,13 @@ namespace BankingApp.Fundamentals.OOP.Report
                 {
                     Console.WriteLine($" User {user.UserName} doesn'n have any transactions with amount between {minimum} and {maximum}  ");
                 }
-                return StringBuilder.ToString() ;
             }
             catch (Exception ex) 
             { 
                 Console.WriteLine(ex.Message);
-                return null;
             }
 
-            finally
-            {
-                StringBuilder.Clear();
-            }
+           
         }
     }
 }
