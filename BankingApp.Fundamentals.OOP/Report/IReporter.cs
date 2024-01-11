@@ -4,11 +4,11 @@ namespace BankingApp.Fundamentals.OOP.Report
 {
     public interface IReporter
     {
-        void DisplayCreditInformation(User user);
-        void DisplayAllTransactions(User user);
-        void DisplayTransactionsForSpecificCategory(Category category, User user);
-        void DisplayTransactionsForSpecificDatePeriod(DateTime startDate, DateTime endDate, User user);
-        void DisplayTransactionsAmountLowerThan(User user);
-        void DisplayTransactionWithAmountBetweenARange(double minimum, double maximum, User user);
+        string DisplayCreditInformation(User user);
+        Task<string> DisplayAllTransactions(User user);
+        string DisplayTransactionsForSpecificCategory(Category category, User user);
+        string DisplayTransactionsForSpecificDatePeriod(DateTime startDate, DateTime endDate, User user);
+        string DisplayTransactionsAmountLowerThan(User user);
+        string DisplayTransactionWithAmountBetweenARange(double minimum, double maximum, User user);
     }
 }
