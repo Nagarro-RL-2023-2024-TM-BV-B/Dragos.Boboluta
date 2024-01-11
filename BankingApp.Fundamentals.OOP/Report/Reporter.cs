@@ -1,17 +1,13 @@
 ﻿using BankingApp.Fundamentals.OOP.Accounts;
 using BankingApp.Fundamentals.OOP.Credit;
 using BankingApp.Fundamentals.OOP.Entities;
-using System.IO;
 using System.Text;
-using System.Text.Json;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BankingApp.Fundamentals.OOP.Report
 {
     public class Reporter : IReporter
     {
         private  string raportFile = "Raports.json";
- 
         private readonly ICreditService _creditService;
         public  StringBuilder StringBuilder = new StringBuilder();
         public Reporter(ICreditService creditService)
@@ -37,12 +33,10 @@ namespace BankingApp.Fundamentals.OOP.Report
             {
                 Console.WriteLine(ex.Message);
             }
-          
         }
         private List<Transaction> GetAllTransactions(User user)
         {
             List<Transaction> transactions = new List<Transaction>();
-
             foreach (CurrentAccount account in user.Accounts)
             {
                 foreach (Transaction transaction in account.transactionList)
@@ -71,7 +65,6 @@ namespace BankingApp.Fundamentals.OOP.Report
                         raportWriter.WriteLine(text); 
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -93,7 +86,6 @@ namespace BankingApp.Fundamentals.OOP.Report
 
                     if (filtredTransactions.Count > 0)
                     {
-
                         foreach (Transaction transaction in filtredTransactions)
                         {
                             text = $" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}   ";
