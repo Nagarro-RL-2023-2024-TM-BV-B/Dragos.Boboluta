@@ -119,22 +119,29 @@ namespace BankingApp.Fundamentals.OOP.Report
         {
             try
             {
-                if(startDate >= endDate) throw new Exception($"Invalid date period , please enter a valid start and end date  ");
+                if (startDate >= endDate) throw new Exception($"Invalid date period , please enter a valid start and end date  ");
                 List<Transaction> transactions = GetAllTransactions(user);
                 if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now  ");
 
                 List<Transaction> filtredTransactions = transactions.Where(x => x.DateTime >= startDate && x.DateTime <= endDate).ToList();
-                Console.WriteLine($"Transactions  for user {user.UserName} made between {startDate.ToShortDateString()} and {endDate.ToShortDateString()} are  : ");
-                if (filtredTransactions.Count > 0)
+                string text = "";
+                using (StreamWriter raportWriter = new StreamWriter(raportFile))
                 {
-                    foreach (Transaction transaction in filtredTransactions)
+                    Console.WriteLine($"Transactions  for user {user.UserName} made between {startDate.ToShortDateString()} and {endDate.ToShortDateString()} are  : ");
+                    raportWriter.WriteLine($"Transactions  for user {user.UserName} made between {startDate.ToShortDateString()} and {endDate.ToShortDateString()} are  : ");
+                    if (filtredTransactions.Count > 0)
                     {
-                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}   ");
+                        foreach (Transaction transaction in filtredTransactions)
+                        {
+                            text = $" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}   ";
+                            Console.WriteLine(text);
+                            raportWriter.WriteLine(text);
+                        }
                     }
-                }
-                else
-                {
-                    Console.WriteLine($" User {user.UserName} doesn'n have any transactions made between {startDate} and {endDate}  ");
+                    else
+                    {
+                        Console.WriteLine($" User {user.UserName} doesn'n have any transactions made between {startDate} and {endDate}  ");
+                    }
                 }
             }
             catch(Exception ex)
