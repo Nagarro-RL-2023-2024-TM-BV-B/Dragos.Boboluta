@@ -209,26 +209,31 @@ namespace BankingApp.Fundamentals.OOP.Report
                     }
                 }
                 List<Transaction> filtredTransactions = transactions.Where(x => x.Amount >= minimum && x.Amount <= maximum).ToList();
-
-                Console.WriteLine($"Transactions  for user {user.UserName} with amount between {minimum} and {maximum} are  :  ");
-                if (filtredTransactions.Count > 0)
-                {
-                    foreach (Transaction transaction in filtredTransactions)
+                using (StreamWriter raportWriter = new StreamWriter(raportFile))
+                {   
+                    Console.WriteLine($"Transactions  for user {user.UserName} with amount between {minimum} and {maximum} are  :  ");
+                    raportWriter.WriteLine($"Transactions  for user {user.UserName} with amount between {minimum} and {maximum} are  :  ");
+                    string text = "";
+                    if (filtredTransactions.Count > 0)
                     {
-                        Console.WriteLine($" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}   ");
+                        foreach (Transaction transaction in filtredTransactions)
+                        {
+                           text = $" => A transaction of amount {transaction.Amount} and type {transaction.Category.ToString()} was made in date {transaction.DateTime}   ";
+
+                            raportWriter.WriteLine(text);
+                            Console.WriteLine(text);
+                        }
                     }
-                }
-                else
-                {
-                    Console.WriteLine($" User {user.UserName} doesn'n have any transactions with amount between {minimum} and {maximum}  ");
+                    else
+                    {
+                        Console.WriteLine($" User {user.UserName} doesn'n have any transactions with amount between {minimum} and {maximum}  ");
+                    }
                 }
             }
             catch (Exception ex) 
             { 
                 Console.WriteLine(ex.Message);
             }
-
-           
         }
     }
 }
