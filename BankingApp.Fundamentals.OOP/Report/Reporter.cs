@@ -22,7 +22,7 @@ namespace BankingApp.Fundamentals.OOP.Report
         {
             try
             {
-                using (StreamWriter raportWriter = new StreamWriter(raportFile))
+                using (StreamWriter raportWriter = new StreamWriter(raportFile ,append: true))
                 {
                     List<CreditAccountDetails> creditDetails = _creditService.GetCreditDetails(user);
                     if (creditDetails.Count == 0) throw new Exception($"User {user.UserName} doesn't have any credits until now  ");
@@ -57,7 +57,7 @@ namespace BankingApp.Fundamentals.OOP.Report
         {
             try
             {
-                using (StreamWriter raportWriter = new StreamWriter(raportFile))
+                using (StreamWriter raportWriter = new StreamWriter(raportFile ,append: true))
                 {
                     List<Transaction> transactions = GetAllTransactions(user);
                     if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now  ");
@@ -82,7 +82,7 @@ namespace BankingApp.Fundamentals.OOP.Report
         {
             try 
             {
-                using (StreamWriter raportWriter = new StreamWriter(raportFile))
+                using (StreamWriter raportWriter = new StreamWriter(raportFile ,append: true))
                 {
                     List<Transaction> transactions = GetAllTransactions(user);
                     if (transactions.Count == 0) throw new Exception($"User {user.UserName} doesn't have any transactions until now  ");
@@ -112,8 +112,6 @@ namespace BankingApp.Fundamentals.OOP.Report
             {
                 Console.WriteLine(ex.Message);
             }
-
-          
         }
         public void DisplayTransactionsForSpecificDatePeriod(DateTime startDate ,DateTime endDate,User user)
         {
@@ -125,7 +123,7 @@ namespace BankingApp.Fundamentals.OOP.Report
 
                 List<Transaction> filtredTransactions = transactions.Where(x => x.DateTime >= startDate && x.DateTime <= endDate).ToList();
                 string text = "";
-                using (StreamWriter raportWriter = new StreamWriter(raportFile))
+                using (StreamWriter raportWriter = new StreamWriter(raportFile ,append: true))
                 {
                     Console.WriteLine($"Transactions  for user {user.UserName} made between {startDate.ToShortDateString()} and {endDate.ToShortDateString()} are  : ");
                     raportWriter.WriteLine($"Transactions  for user {user.UserName} made between {startDate.ToShortDateString()} and {endDate.ToShortDateString()} are  : ");
@@ -166,7 +164,7 @@ namespace BankingApp.Fundamentals.OOP.Report
                 }
                 List<Transaction> filtredTransactions = transactions.Where(x => x.Amount < 1000).ToList();
                 string text = "";
-                using (StreamWriter raportWriter = new StreamWriter(raportFile))
+                using (StreamWriter raportWriter = new StreamWriter(raportFile ,append: true))
                 {
                     Console.WriteLine($"Transactions  for user {user.UserName} with amount less than 1000 are  :  ");
                     raportWriter.WriteLine($"Transactions  for user {user.UserName} with amount less than 1000 are  :  ");
@@ -190,8 +188,6 @@ namespace BankingApp.Fundamentals.OOP.Report
             {
                 Console.WriteLine(ex.Message);
             }
-
-           
         }
         public void DisplayTransactionWithAmountBetweenARange(double minimum,double maximum,User user)
         {
@@ -209,7 +205,7 @@ namespace BankingApp.Fundamentals.OOP.Report
                     }
                 }
                 List<Transaction> filtredTransactions = transactions.Where(x => x.Amount >= minimum && x.Amount <= maximum).ToList();
-                using (StreamWriter raportWriter = new StreamWriter(raportFile))
+                using (StreamWriter raportWriter = new StreamWriter(raportFile ,append: true))
                 {   
                     Console.WriteLine($"Transactions  for user {user.UserName} with amount between {minimum} and {maximum} are  :  ");
                     raportWriter.WriteLine($"Transactions  for user {user.UserName} with amount between {minimum} and {maximum} are  :  ");

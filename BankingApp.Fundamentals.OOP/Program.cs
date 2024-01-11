@@ -15,33 +15,10 @@ using (var scope = container.BeginLifetimeScope())
     IReporter reporter = scope.Resolve<IReporter>();
     ICreditService creditService = scope.Resolve<ICreditService>();
     
-    User user1 = new User("Dragos");
-    Account account = new CurrentAccount("3245132",5000,Currency.RON);
-    Account account2 = new CurrentAccount("1245132", 7000, Currency.RON);
-    CreditAccount creditAccount = new CreditAccount(2000, CreditCategory.PersonalLoan);
+  
     DateTime startDate = DateTime.Now.AddDays(-1);
     DateTime endDate = DateTime.Now.AddDays(1);
 
-   // user1.Accounts.Add(account);
-   // user1.Accounts.Add(account2);
-   // user1.CreditAccounts.Add(creditAccount);
-
-    account.Withdraw(100);
-    account.Withdraw(500);
-    account.Deposit(600);
-    account.Deposit(5000);
-    account.Withdraw(5300);
-    account.Deposit(150);
-    account2.Withdraw(99);
-    account2.Deposit(150);
-
-    /* reporter.DisplayCreditInformation(user1);
-    reporter.DisplayAllTransactions(user1);
-    reporter.DisplayTransactionsAmountLowerThan(user1);
-    reporter.DisplayTransactionsForSpecificCategory(Category.Widraw, user1);
-    reporter.DisplayTransactionWithAmountBetweenARange(100, 400, user1);
-    reporter.DisplayTransactionsForSpecificDatePeriod(startDate,endDate,user1);
-    */
     var userFile = "User.json";
     var raportFile = "Raports.json";
     var creditAccountFile = "CreditAccount.json";
@@ -53,14 +30,12 @@ using (var scope = container.BeginLifetimeScope())
         using FileStream userStream = File.OpenRead(userFile);
         using FileStream creditAccountStream = File.OpenRead(creditAccountFile);
         using FileStream currentAccountStream = File.OpenRead(currentAccountFile);
-       // using FileStream raportStream = File.OpenWrite(raportFile);
-
 
         UserDataModel userDeserialized = await JsonSerializer.DeserializeAsync<UserDataModel>(userStream);
         CreditAccountDataModel creditAccountDeserialized = await JsonSerializer.DeserializeAsync<CreditAccountDataModel>(creditAccountStream);
         AccountDataModel currentAccount = await JsonSerializer.DeserializeAsync<AccountDataModel>(currentAccountStream);
 
-        User test = new User(userDeserialized.UserName); //creez userul 
+        User test = new User(userDeserialized.UserName);  
 
         Account testAccount = new CurrentAccount(currentAccount.AccountNumber, currentAccount.InitialBalance, currentAccount.Currency);
             test.Accounts.Add(testAccount);
@@ -69,12 +44,16 @@ using (var scope = container.BeginLifetimeScope())
             testAccount.Withdraw(500);
             testAccount.Deposit(600);
 
-           //reporter.DisplayAllTransactions(test);
         reporter.DisplayTransactionsForSpecificCategory(Category.Widraw, test);
-
+        reporter.DisplayAllTransactions(test);
+        reporter.DisplayTransactionsAmountLowerThan(test);
+        reporter.DisplayTransactionsForSpecificCategory(Category.Widraw, test);
+        reporter.DisplayTransactionWithAmountBetweenARange(100, 400, test);
+        reporter.DisplayTransactionsForSpecificDatePeriod(startDate, endDate, test);
     }
     catch (Exception ex)
     {
         Console.WriteLine($"Eroare la citirea din fișier: {ex.Message}");
     }
+   
 }
