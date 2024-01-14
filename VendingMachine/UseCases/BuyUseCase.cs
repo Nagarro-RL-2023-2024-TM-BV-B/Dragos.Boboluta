@@ -48,6 +48,13 @@ namespace Nagarro.VendingMachine.UseCases
 
             paymentId = buyView.AskForPaymentMethod(paymentMethods);
 
+            string paymentName = paymentMethods.Where(x => x.Id == paymentId).Select(x => x.Name).FirstOrDefault();
+
+            paymentUseCase.Name = paymentName;
+
+            paymentUseCase.CanExecute = true;
+
+            paymentUseCase.Execute((float)product.Price);
 
             product.Quantity--;
 

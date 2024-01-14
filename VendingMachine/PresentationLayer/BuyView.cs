@@ -27,7 +27,23 @@ namespace Nagarro.VendingMachine.PresentationLayer
         }
         public int? AskForPaymentMethod(IEnumerable<PaymentMethod> paymentMethods)
         {
-            return 1;
+            Console.WriteLine();
+            foreach (PaymentMethod paymentMethod in paymentMethods)
+            {
+                DisplayLine($"Available options : {paymentMethod.Name} ", ConsoleColor.White);
+                Console.WriteLine();
+            }
+            Display("Choose a payment method (Enter to cancel): ", ConsoleColor.Cyan);
+
+            string inputValue = Console.ReadLine();
+            Console.WriteLine();
+
+            if (string.IsNullOrEmpty(inputValue))
+                throw new CancelException();
+
+            var paymentId = paymentMethods.Where(x => x.Name == inputValue).First().Id;
+
+            return paymentId != 0 ? paymentId : throw new CancelException();
         }
     }
 }
