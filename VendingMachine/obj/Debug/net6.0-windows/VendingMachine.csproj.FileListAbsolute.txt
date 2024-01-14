@@ -1,0 +1,15 @@
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\bin\Debug\net6.0-windows\Nagarro.VendingMachine.exe
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\bin\Debug\net6.0-windows\Nagarro.VendingMachine.deps.json
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\bin\Debug\net6.0-windows\Nagarro.VendingMachine.runtimeconfig.json
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\bin\Debug\net6.0-windows\Nagarro.VendingMachine.dll
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\bin\Debug\net6.0-windows\Nagarro.VendingMachine.pdb
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\VendingMachine.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\VendingMachine.AssemblyInfoInputs.cache
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\VendingMachine.AssemblyInfo.cs
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\VendingMachine.csproj.CoreCompileInputs.cache
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\VendingMachine.sourcelink.json
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\Nagarro.VendingMachine.dll
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\refint\Nagarro.VendingMachine.dll
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\Nagarro.VendingMachine.pdb
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\VendingMachine.genruntimeconfig.cache
+C:\Users\drago\source\repos\solvedHM\Dragos.Boboluta\VendingMachine\obj\Debug\net6.0-windows\ref\Nagarro.VendingMachine.dll

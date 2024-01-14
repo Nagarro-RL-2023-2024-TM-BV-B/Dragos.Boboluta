@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © Nagarro 2017-2022")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("This is an exercise used in the Remote Learning program from Nagarro.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb5a5753ce4d81b7f125a4805fd18cf74eeff6ef")]
 [assembly: System.Reflection.AssemblyProductAttribute("Vending Machine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Nagarro.VendingMachine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

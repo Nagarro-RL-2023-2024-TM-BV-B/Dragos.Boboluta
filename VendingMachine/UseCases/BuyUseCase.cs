@@ -14,18 +14,19 @@ namespace Nagarro.VendingMachine.UseCases
         private readonly AuthenticationService authenticationService;
         private readonly BuyView buyView;
         private readonly ProductRepository productRepository;
-        private readonly PaymentUseCase paymentUseCase = new PaymentUseCase();
+        private readonly PaymentUseCase paymentUseCase;
         public string Name => "buy";
 
         public string Description => "Activate the numeric keyboard to buy a product.";
 
         public bool CanExecute => !authenticationService.IsUserAuthenticated;
 
-        public BuyUseCase(AuthenticationService authenticationService, BuyView buyView, ProductRepository productRepository)
+        public BuyUseCase(AuthenticationService authenticationService, BuyView buyView, ProductRepository productRepository, PaymentUseCase paymentUseCase)
         {
             this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
             this.buyView = buyView ?? throw new ArgumentNullException(nameof(buyView));
             this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            this.paymentUseCase = paymentUseCase ?? throw new ArgumentNullException(nameof(paymentUseCase));
         }
 
         public void Execute()
