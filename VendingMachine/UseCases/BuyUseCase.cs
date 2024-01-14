@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Nagarro.VendingMachine.Authentication;
 using Nagarro.VendingMachine.DataAccess;
 using Nagarro.VendingMachine.PresentationLayer;
+using Nagarro.VendingMachine.UseCases.Payment;
+using Nagarro.VendingMachine.UseCases.PaymentUse;
 
 namespace Nagarro.VendingMachine.UseCases
 {
@@ -10,7 +14,7 @@ namespace Nagarro.VendingMachine.UseCases
         private readonly AuthenticationService authenticationService;
         private readonly BuyView buyView;
         private readonly ProductRepository productRepository;
-
+        private readonly PaymentUseCase paymentUseCase = new PaymentUseCase();
         public string Name => "buy";
 
         public string Description => "Activate the numeric keyboard to buy a product.";
@@ -27,6 +31,12 @@ namespace Nagarro.VendingMachine.UseCases
         public void Execute()
         {
             int columnId = buyView.RequestProduct();
+            int? paymentId;
+
+            PaymentMethod paymentWithCard = new PaymentMethod { Id = 1, Name = "card" };
+            PaymentMethod paymentWithCash = new PaymentMethod { Id = 2, Name = "cash" };
+
+            List<PaymentMethod> paymentMethods = new List<PaymentMethod> { paymentWithCard, paymentWithCash };
 
             Product product = productRepository.GetByColumn(columnId);
 
@@ -36,8 +46,8 @@ namespace Nagarro.VendingMachine.UseCases
             if (product.Quantity < 1)
                 throw new InsufficientStockException(product.Name);
 
-            // todo: do the payment
-            // For now, we consider the payment successful.
+            paymentId = buyView.AskForPaymentMethod(paymentMethods);
+
 
             product.Quantity--;
 

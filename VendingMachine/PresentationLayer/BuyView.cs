@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Nagarro.VendingMachine.UseCases.Payment;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nagarro.VendingMachine.PresentationLayer
 {
@@ -21,6 +24,10 @@ namespace Nagarro.VendingMachine.PresentationLayer
         public void DispenseProduct(string productName)
         {
             DisplayLine($"Pick up the product: {productName}", ConsoleColor.Yellow);
+        }
+        public int? AskForPaymentMethod(IEnumerable<PaymentMethod> paymentMethods)
+        {
+            return 1;
         }
     }
 }
