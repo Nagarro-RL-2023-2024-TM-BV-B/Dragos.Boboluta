@@ -14,6 +14,7 @@ namespace BankingApp.Fundamentals.OOP.Entities
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public CreditCategory CreditType { get; set; }
         public CreditAccountDetails CreditDetails;
+
         public CreditAccount(){}
         public CreditAccount( double creditAmount , CreditCategory category ) 
         {
