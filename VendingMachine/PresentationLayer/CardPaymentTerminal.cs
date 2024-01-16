@@ -6,7 +6,15 @@ namespace Nagarro.VendingMachine.PresentationLayer
     {
         public string AskForCardNumber()
         {
-            return "11231514123";
+            Console.WriteLine();
+            Display("Enter a credit card number (Enter to cancel): ", ConsoleColor.Cyan);
+
+            string creditCardNumber = Console.ReadLine();
+            Console.WriteLine();
+            if (string.IsNullOrEmpty(creditCardNumber))
+                throw new CancelException();
+
+            return creditCardNumber;
         }
     }
 }
