@@ -24,13 +24,20 @@ namespace Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms.CashPayment
                     value = terminal.AskForMoney();
                     balance += value;
 
-                    
+                    if ((value.Value * 100).IsMonetaryValueCheck())
+                    {
                         price -= value.Value;
                         if (price > 0)
                         {
                             Console.WriteLine($"Remainding price : {price} Ron");
                         }
-                   
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Enter a valid monetary value ");
+                        Console.WriteLine();
+                    }
                 }
                 catch (Exception ex)
                 {
