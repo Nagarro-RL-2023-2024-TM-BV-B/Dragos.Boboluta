@@ -17,7 +17,7 @@ namespace Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms.CardPayment
         {
             var terminal = new CardPaymentTerminal();
             string response = terminal.AskForCardNumber();
-            bool isValid = true;
+            bool isValid = response.IsValidLuhn();
             if (!isValid)
             {
                 throw new Exception("Bad card number");
