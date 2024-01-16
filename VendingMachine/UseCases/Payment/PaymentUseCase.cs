@@ -1,5 +1,6 @@
 ﻿using Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace Nagarro.VendingMachine.UseCases.PaymentUse
@@ -12,7 +13,11 @@ namespace Nagarro.VendingMachine.UseCases.PaymentUse
         public bool CanExecute { get; set; }
         public void Execute(float price)
         {
-           
+            if (CanExecute && Name != null)
+            {
+                IPaymenthAlgorithm algorithm = paymentAlgorithms.Where(x => x.Name.Equals(Name)).First();
+                algorithm.Run(price);
+            }
         }
     }
 }
