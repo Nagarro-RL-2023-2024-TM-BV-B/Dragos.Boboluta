@@ -25,13 +25,20 @@ namespace Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms.CashPayment
                     value = terminal.AskForMoney();
                     balance += value;
 
-                   
+                    if ((value.Value * 100).IsValidMonetary())
+                    {
                         price -= value.Value;
                         if (price > 0)
                         {
                             Console.WriteLine($"Remainding price : {price} Ron");
                         }
-                   
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Enter a valid monetary value ");
+                        Console.WriteLine();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -41,7 +48,9 @@ namespace Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms.CashPayment
             }
             if (price < 0)
             {
-                terminal.GiveBackChange(price);
+                float change = -price;
+                float truncatedchange = (float)(Math.Floor(change * 1000) / 1000);
+                terminal.GiveBackChange(truncatedchange);
             }
         }
     }
