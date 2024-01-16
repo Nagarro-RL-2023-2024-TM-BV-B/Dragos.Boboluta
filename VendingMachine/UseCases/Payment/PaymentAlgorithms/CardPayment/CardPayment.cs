@@ -15,7 +15,14 @@ namespace Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms.CardPayment
 
         public void Run(float price)
         {
-          
+            var terminal = new CardPaymentTerminal();
+            string response = terminal.AskForCardNumber();
+            bool isValid = true;
+            if (!isValid)
+            {
+                throw new Exception("Bad card number");
+                throw new CancelException();
+            }
         }
     }
 }
