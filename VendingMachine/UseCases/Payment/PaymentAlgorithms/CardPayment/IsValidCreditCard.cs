@@ -5,12 +5,22 @@ namespace Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms.CardPayment
     {
         public static bool IsValidLuhn(this string cardNumber)
         {
-            char[] charArray = cardNumber.ToCharArray();
+            char[] reversedCardNumber = ReverseString(cardNumber);
 
+            int sum = CalculateLuhnSum(reversedCardNumber);
+
+            return sum % 10 == 0;
+        }
+
+        private static char[] ReverseString(string input)
+        {
+            char[] charArray = input.ToCharArray();
             Array.Reverse(charArray);
+            return charArray;
+        }
 
-            string reversedCardNumber = new string(charArray);
-
+        private static int CalculateLuhnSum(char[] reversedCardNumber)
+        {
             int sum = 0;
             bool doubleDigit = false;
 
@@ -19,21 +29,28 @@ namespace Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms.CardPayment
                 if (char.IsDigit(digit))
                 {
                     int digitValue = digit - '0';
+                    digitValue = ApplyLuhnAlgorithm(digitValue, doubleDigit);
 
-                    if (doubleDigit)
-                    {
-                        digitValue *= 2;
-
-                        if (digitValue > 9)
-                        {
-                            digitValue -= 9;
-                        }
-                    }
                     sum += digitValue;
                     doubleDigit = !doubleDigit;
                 }
             }
-            return sum % 10 == 0;
+
+            return sum;
+        }
+
+        private static int ApplyLuhnAlgorithm(int digitValue, bool doubleDigit)
+        {
+            if (doubleDigit)
+            {
+                digitValue *= 2;
+
+                if (digitValue > 9)
+                {
+                    digitValue -= 9;
+                }
+            }
+            return digitValue;
         }
 
     }

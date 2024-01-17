@@ -15,7 +15,7 @@ namespace Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms.CardPayment
 
         public void Run(float price)
         {
-            var terminal = new CardPaymentTerminal();
+            CardPaymentTerminal terminal = new CardPaymentTerminal();
             string response = terminal.AskForCardNumber();
             bool isValid = response.IsValidLuhn();
             if (!isValid)

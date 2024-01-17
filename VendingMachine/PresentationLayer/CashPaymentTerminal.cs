@@ -12,7 +12,9 @@ namespace Nagarro.VendingMachine.PresentationLayer
             Console.WriteLine();
 
             if (string.IsNullOrEmpty(balance))
+            {
                 throw new CancelException();
+            }
             return float.Parse(balance);
         }
         public void GiveBackChange(float balance)

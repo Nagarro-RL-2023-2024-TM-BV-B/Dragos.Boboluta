@@ -14,7 +14,7 @@ namespace Nagarro.VendingMachine.UseCases.Payment.PaymentAlgorithms.CashPayment
 
         public void Run(float price)
         {
-            var terminal = new CashPaymentTerminal();
+            CashPaymentTerminal terminal = new CashPaymentTerminal();
 
             float? balance = 0;
             float? value;

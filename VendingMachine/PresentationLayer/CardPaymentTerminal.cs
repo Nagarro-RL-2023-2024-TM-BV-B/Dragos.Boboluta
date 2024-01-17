@@ -12,7 +12,9 @@ namespace Nagarro.VendingMachine.PresentationLayer
             string creditCardNumber = Console.ReadLine();
             Console.WriteLine();
             if (string.IsNullOrEmpty(creditCardNumber))
+            {
                 throw new CancelException();
+            }
 
             return creditCardNumber;
         }
