@@ -3,6 +3,7 @@ using Nagarro.VendingMachine.Authentication;
 using Nagarro.VendingMachine.DataAccess;
 using Nagarro.VendingMachine.PresentationLayer;
 using Nagarro.VendingMachine.UseCases;
+using Nagarro.VendingMachine.UseCases.PaymentUse;
 
 namespace Nagarro.VendingMachine
 {
@@ -36,11 +37,11 @@ namespace Nagarro.VendingMachine
             // --------------------------------------------------------------------------------
 
             AuthenticationService authenticationService = new AuthenticationService();
-
+            PaymentUseCase paymentUseCase = new PaymentUseCase();
             List<IUseCase> useCases = new List<IUseCase>
             {
                 new LookUseCase(productRepository, shelfView),
-                new BuyUseCase(authenticationService, buyView, productRepository),
+                new BuyUseCase(authenticationService, buyView, productRepository,paymentUseCase),
                 new LoginUseCase(authenticationService, loginView),
                 new LogoutUseCase(authenticationService),
             };
