@@ -30,7 +30,7 @@ namespace Nagarro.VendingMachine
             // Configure data access
             // --------------------------------------------------------------------------------
 
-            ProductRepository productRepository = new ProductRepository();
+            IProductRepository productRepository = new ProductRepository();
 
             // --------------------------------------------------------------------------------
             // Configure use cases

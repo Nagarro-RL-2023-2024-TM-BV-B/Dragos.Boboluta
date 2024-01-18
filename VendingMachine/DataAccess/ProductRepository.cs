@@ -2,7 +2,7 @@
 
 namespace Nagarro.VendingMachine.DataAccess
 {
-    internal class ProductRepository
+    internal class ProductRepository : IProductRepository
     {
         private static readonly ICollection<Product> Products = new List<Product>
         {
@@ -27,8 +27,16 @@ namespace Nagarro.VendingMachine.DataAccess
                 Quantity = 10,
                 ColumnId = 3
             }
-        };
 
+
+        };
+        public ProductRepository() 
+        
+        { 
+        
+        
+        
+        }  
         public List<Product> GetAll()
         {
             List<Product> list = new List<Product>();

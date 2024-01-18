@@ -13,7 +13,7 @@ namespace Nagarro.VendingMachine.UseCases
     {
         private readonly AuthenticationService authenticationService;
         private readonly BuyView buyView;
-        private readonly ProductRepository productRepository;
+        private readonly IProductRepository productRepository;
         private readonly PaymentUseCase paymentUseCase;
 
         public string Name => "buy";
@@ -22,7 +22,7 @@ namespace Nagarro.VendingMachine.UseCases
 
         public bool CanExecute => !authenticationService.IsUserAuthenticated;
 
-        public BuyUseCase(AuthenticationService authenticationService, BuyView buyView, ProductRepository productRepository, PaymentUseCase paymentUseCase)
+        public BuyUseCase(AuthenticationService authenticationService, BuyView buyView, IProductRepository productRepository, PaymentUseCase paymentUseCase)
 
         {
             this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
