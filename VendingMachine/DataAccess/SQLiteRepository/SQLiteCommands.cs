@@ -12,28 +12,25 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
 {
     internal static class SQLiteCommands
     {
-        private static readonly ICollection<Product> Products = new List<Product>
+        private static readonly ICollection<ProductDto> Products = new List<ProductDto>
         {
-            new Product
+            new ProductDto
             {
                 Name = "Chocolate",
                 Price = 9,
                 Quantity = 20,
-                ColumnId = 1
             },
-            new Product
+            new ProductDto
             {
                 Name = "Chips",
                 Price = 5,
                 Quantity = 7,
-                ColumnId = 2
             },
-            new Product
+            new ProductDto
             {
                 Name = "Still Water",
                 Price = 2,
                 Quantity = 10,
-                ColumnId = 3
             }
         };
         internal static void CreateTable(SQLiteConnection connection, string tableName)
@@ -47,7 +44,7 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
 
         internal static void AddInitialProducts(SQLiteConnection connection)
         {
-            foreach (Product product in Products)
+            foreach (ProductDto product in Products)
             {
                 using (SQLiteCommand insertDataCommand = new SQLiteCommand(
                     $"INSERT INTO Products (Name, Price, Quantity) VALUES (@Name, @Price, @Quantity);",

@@ -12,32 +12,65 @@ namespace Nagarro.VendingMachine.PresentationLayer
     {
         public ProductDto RequestProduct()
         {
-          string Name =   RequestProductName();
-          decimal Price = RequestProductPrice();
-          int Quantity = RequestProductQuantity();
-
-            ProductDto productDto = new ProductDto()
+            try
             {
-                Name = Name,
-                Price = Price,
-                Quantity = Quantity,
-            };
+                string Name = RequestProductName();
+                decimal Price = RequestProductPrice();
+                int Quantity = RequestProductQuantity();
 
-            return productDto;
+                ProductDto productDto = new ProductDto()
+                {
+                    Name = Name,
+                    Price = Price,
+                    Quantity = Quantity,
+                };
+                return productDto;
 
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
         private string RequestProductName()
         {
-            return "milk";
+            Console.WriteLine();
+            Display("Enter a product name (Enter to cancel): ", ConsoleColor.Cyan);
+
+            string productName = Console.ReadLine();
+            Console.WriteLine();
+
+            if (string.IsNullOrEmpty(productName))
+                throw new CancelException();
+
+            return productName;
         }
         private decimal RequestProductPrice()
         {
-            return 30;
+            Console.WriteLine();
+            Display("Enter a product price (Enter to cancel): ", ConsoleColor.Cyan);
+
+            string productPrice = Console.ReadLine();
+            Console.WriteLine();
+
+            if (string.IsNullOrEmpty(productPrice))
+                throw new CancelException();
+
+            return decimal.Parse(productPrice);
         }
-        private  int  RequestProductQuantity()
+        private int RequestProductQuantity()
         {
-            return 10;
+            Console.WriteLine();
+            Display("Enter quantity of the product (Enter to cancel): ", ConsoleColor.Cyan);
+
+            string productQuantity = Console.ReadLine();
+            Console.WriteLine();
+
+            if (string.IsNullOrEmpty(productQuantity))
+                throw new CancelException();
+
+            return int.Parse(productQuantity);
         }
-        
+
     }
 }

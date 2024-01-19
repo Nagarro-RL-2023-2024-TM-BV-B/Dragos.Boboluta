@@ -30,8 +30,10 @@ namespace Nagarro.VendingMachine.UseCases
         public void Execute()
         {
             ProductDto product = addView.RequestProduct();
-            productRepository.AddProduct(product);
-
+            if(product != null)
+            {
+                productRepository.AddProduct(product);
+            }
         }
     }
 }
