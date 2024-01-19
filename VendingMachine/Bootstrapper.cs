@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nagarro.VendingMachine.Authentication;
 using Nagarro.VendingMachine.DataAccess;
+using Nagarro.VendingMachine.DataAccess.SQLiteRepository;
 using Nagarro.VendingMachine.PresentationLayer;
 using Nagarro.VendingMachine.UseCases;
 using Nagarro.VendingMachine.UseCases.PaymentUse;

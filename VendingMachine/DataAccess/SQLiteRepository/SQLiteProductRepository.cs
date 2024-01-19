@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 
 
-namespace Nagarro.VendingMachine.DataAccess
+namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
 {
     internal class SQLiteProductRepository : IProductRepository
     {
         private SQLiteConnection connection;
+      
 
         public SQLiteProductRepository(string connectionStringT)
         {
-            var connectionString = "Data Source=C:\\Users\\drago\\source\\repos\\SQLiteDB\\vendindb.db;Version=3;";
-            connection = new SQLiteConnection(connectionString);
+            var connectionString = "Data Source=C:\\Users\\drago\\source\\repos\\SQLiteDB\\vendingdb.db;Version=3;";
             try
             {
+                connection = new SQLiteConnection(connectionString);
                 connection.Open();
-                using (SQLiteCommand createTableCommand = new SQLiteCommand(
-                "CREATE TABLE IF NOT EXISTS Products (ColumnId INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Price DECIMAL, Quantity INTEGER);", connection))
-                {
-                    createTableCommand.ExecuteNonQuery();
-                }
+                SQLiteCommands.CreateTable(connection,"Products");
                 connection.Close();
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.ToString());
+                throw;
             }
-            finally { connection.Close(); }
-
-
+            finally
+            {
+                connection.Close();
+            }
 
 
         }
