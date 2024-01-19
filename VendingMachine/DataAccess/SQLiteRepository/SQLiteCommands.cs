@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations.Model;
 using System.Data.SQLite;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,12 +43,13 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 createTableCommand.ExecuteNonQuery();
             }
         }
+
         internal static void AddInitialProducts(SQLiteConnection connection)
         {
             foreach (Product product in Products)
             {
                 using (SQLiteCommand insertDataCommand = new SQLiteCommand(
-                    "INSERT INTO Products (Name, Price, Quantity) VALUES (@Name, @Price, @Quantity);",
+                    $"INSERT INTO Products (Name, Price, Quantity) VALUES (@Name, @Price, @Quantity);",
                     connection))
                 {
                     insertDataCommand.Parameters.AddWithValue("@Name", product.Name);
@@ -66,11 +68,19 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 createTableCommand.ExecuteNonQuery();
             }
         }
+        internal static bool InitialProductsCheck(SQLiteConnection connection)
+        {
+            using (SQLiteCommand selectDataCommand = new SQLiteCommand("SELECT * FROM Products;", connection))
+            {
+                int rowCount = Convert.ToInt32(selectDataCommand.ExecuteScalar());
+
+                return rowCount.Equals(0) ? false : true;
+            }
+        }
+
         internal static List<Product> GetProducts(SQLiteConnection connection)
         {
-            using (SQLiteCommand selectDataCommand = new SQLiteCommand(
-                   "SELECT * FROM Products;",
-                   connection))
+            using (SQLiteCommand selectDataCommand = new SQLiteCommand("SELECT * FROM Products;", connection))
             {
                 using (SQLiteDataReader reader = selectDataCommand.ExecuteReader())
                 {
@@ -117,7 +127,7 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
         internal static void DispenseProduct(SQLiteConnection connection, int productId)
         {
             Product product = SQLiteCommands.GetProductById(connection, productId);
-            using (SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE Products SET Quantity = {product.Quantity} - 1 WHERE ColumnId = {productId}",connection))
+            using (SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE Products SET Quantity = {product.Quantity} - 1 WHERE ColumnId = {productId}", connection))
             {
                 updateCommand.ExecuteNonQuery();
             }

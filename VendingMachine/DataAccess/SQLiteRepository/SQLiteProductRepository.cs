@@ -18,10 +18,17 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
             {
                 connection = new SQLiteConnection(connectionString);
                 connection.Open();
-                SQLiteCommands.CreateTable(connection,"Products");
-              //  SQLiteCommands.DeleteAllDataFromTable(connection, "Products");
-              //  SQLiteCommands.AddInitialProducts(connection);
-                connection.Close();
+                SQLiteCommands.CreateTable(connection, "Products");
+                var initial = SQLiteCommands.InitialProductsCheck(connection);
+                if (initial)
+                {
+                    connection.Close();
+                }
+                else
+                {
+                    SQLiteCommands.DeleteAllDataFromTable(connection, "Products");
+                    SQLiteCommands.AddInitialProducts(connection);
+                }
             }
             catch (Exception ex)
             {
@@ -58,18 +65,18 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
             try
             {
                 connection.Open();
-                List<Product> list =  SQLiteCommands.GetProducts(connection);
+                List<Product> list = SQLiteCommands.GetProducts(connection);
                 connection.Close();
                 return list;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 throw;
             }
-            finally 
-            { 
-                connection.Close(); 
+            finally
+            {
+                connection.Close();
             }
         }
 
