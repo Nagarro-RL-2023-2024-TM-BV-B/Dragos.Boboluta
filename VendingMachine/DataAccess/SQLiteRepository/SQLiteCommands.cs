@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations.Model;
 using System.Data.SQLite;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Nagarro.VendingMachine.Models.ProductModel;
 
 namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
@@ -61,8 +56,9 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
         internal static void DeleteAllDataFromTable(SQLiteConnection connection, string tableName)
         {
             using (SQLiteCommand createTableCommand = new SQLiteCommand(
-              $"DELETE FROM  {tableName} ", connection))
+              $"DELETE FROM  @TableName ", connection))
             {
+                createTableCommand.Parameters.AddWithValue(tableName, tableName);
                 createTableCommand.ExecuteNonQuery();
             }
         }
@@ -124,23 +120,56 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
         }
         internal static void DispenseProduct(SQLiteConnection connection, int productId)
         {
-            Product product = SQLiteCommands.GetProductById(connection, productId);
-            using (SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE Products SET Quantity = {product.Quantity} - 1 WHERE ColumnId = {productId}", connection))
+            Product product = GetProductById(connection, productId);
+            using (SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE Products SET Quantity = @Quantity - 1 WHERE ColumnId = @ColumnId", connection))
             {
+                updateCommand.Parameters.AddWithValue("@ColumnId", product.ColumnId);
+                updateCommand.Parameters.AddWithValue("@Quantity", product.Quantity);
+
                 updateCommand.ExecuteNonQuery();
             }
         }
         internal static void AddProduct(SQLiteConnection connection, ProductDto product)
         {
-            using (SQLiteCommand insertDataCommand = new SQLiteCommand(
-                    $"INSERT INTO Products (Name, Price, Quantity) VALUES (@Name, @Price, @Quantity);",
-                    connection))
+            bool productAlreadyExists = false;
+            string checkProductQuery = "SELECT COUNT(*) FROM Products WHERE Name = @ProductNameToCheck;";
+            using (SQLiteCommand checkProductCommand = new SQLiteCommand(checkProductQuery, connection))
             {
-                insertDataCommand.Parameters.AddWithValue("@Name", product.Name);
-                insertDataCommand.Parameters.AddWithValue("@Price", product.Price);
-                insertDataCommand.Parameters.AddWithValue("@Quantity", product.Quantity);
+                checkProductCommand.Parameters.AddWithValue("@ProductNameToCheck", product.Name);
 
-                insertDataCommand.ExecuteNonQuery();
+                int productCount = Convert.ToInt32(checkProductCommand.ExecuteScalar());
+
+                if (productCount > 0)
+                {
+                    productAlreadyExists = true;
+                }
+                else
+                {
+                    productAlreadyExists = false;
+                }
+            }
+            if (!productAlreadyExists)
+            {
+                using (SQLiteCommand insertDataCommand = new SQLiteCommand(
+                        $"INSERT INTO Products (Name, Price, Quantity) VALUES (@Name, @Price, @Quantity);",
+                        connection))
+                {
+                    insertDataCommand.Parameters.AddWithValue("@Name", product.Name);
+                    insertDataCommand.Parameters.AddWithValue("@Price", product.Price);
+                    insertDataCommand.Parameters.AddWithValue("@Quantity", product.Quantity);
+
+                    insertDataCommand.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                using (SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE Products SET Quantity = Quantity +  @Quantity WHERE Name = @ProductNameToCheck", connection))
+                {
+                    updateCommand.Parameters.AddWithValue("@ProductNameToCheck", product.Name);
+                    updateCommand.Parameters.AddWithValue("@Quantity", product.Quantity);
+
+                    updateCommand.ExecuteNonQuery();
+                }
             }
         }
     }

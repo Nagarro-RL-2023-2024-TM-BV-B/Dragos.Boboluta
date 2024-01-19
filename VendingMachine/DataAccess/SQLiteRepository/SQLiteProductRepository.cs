@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Data.SQLite;
-using System.Security.Policy;
 using Nagarro.VendingMachine.Models.ProductModel;
-
-
 namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
 {
     internal class SQLiteProductRepository : IProductRepository
     {
         private readonly SQLiteConnection connection;
-
         public SQLiteProductRepository(string connectionStringT)
         {
 
@@ -21,8 +15,7 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 connection = new SQLiteConnection(connectionStringT);
                 connection.Open();
                 SQLiteCommands.CreateTable(connection, "Products");
-                var initial = SQLiteCommands.InitialProductsCheck(connection);
-                if (initial)
+                if (SQLiteCommands.InitialProductsCheck(connection))
                 {
                     connection.Close();
                 }
