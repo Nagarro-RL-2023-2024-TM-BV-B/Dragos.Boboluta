@@ -36,7 +36,13 @@ namespace Nagarro.VendingMachine.DataAccess
         
         
         
-        }  
+        }
+
+        public void DispenseProduct(Product product)
+        {
+            product.Quantity--;
+        }
+
         public List<Product> GetAll()
         {
             List<Product> list = new List<Product>();
@@ -57,5 +63,6 @@ namespace Nagarro.VendingMachine.DataAccess
 
             return null;
         }
+
     }
 }

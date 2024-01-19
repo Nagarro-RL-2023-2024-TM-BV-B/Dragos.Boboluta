@@ -19,8 +19,8 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 connection = new SQLiteConnection(connectionString);
                 connection.Open();
                 SQLiteCommands.CreateTable(connection,"Products");
-                SQLiteCommands.DeleteAllDataFromTable(connection, "Products");
-                SQLiteCommands.AddInitialProducts(connection);
+              //  SQLiteCommands.DeleteAllDataFromTable(connection, "Products");
+              //  SQLiteCommands.AddInitialProducts(connection);
                 connection.Close();
             }
             catch (Exception ex)
@@ -33,6 +33,26 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 connection.Close();
             }
         }
+
+        public void DispenseProduct(Product product)
+        {
+            try
+            {
+                connection.Open();
+                SQLiteCommands.DispenseProduct(connection, product.ColumnId);
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         public List<Product> GetAll()
         {
             try
@@ -55,7 +75,22 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
 
         public Product GetByColumn(int columnId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                connection.Open();
+                Product product = SQLiteCommands.GetProductById(connection, columnId);
+                connection.Close();
+                return product;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
     }
 }

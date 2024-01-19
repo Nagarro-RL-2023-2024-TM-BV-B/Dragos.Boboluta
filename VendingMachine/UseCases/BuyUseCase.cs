@@ -56,7 +56,7 @@ namespace Nagarro.VendingMachine.UseCases
 
             paymentUseCase.Execute((float)product.Price);
 
-            product.Quantity--;
+            productRepository.DispenseProduct(product);
 
             buyView.DispenseProduct(product.Name);
         }

@@ -34,10 +34,10 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 ColumnId = 3
             }
         };
-        internal static void CreateTable(SQLiteConnection connection,string tableName)
+        internal static void CreateTable(SQLiteConnection connection, string tableName)
         {
             using (SQLiteCommand createTableCommand = new SQLiteCommand(
-               $"CREATE TABLE IF NOT EXISTS {tableName} (ColumnId INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Price DECIMAL, Quantity INTEGER);", connection))
+               $"CREATE TABLE IF NOT EXISTS {tableName} (ColumnId INTEGER PRIMARY KEY, Name TEXT, Price DECIMAL, Quantity INTEGER);", connection))
             {
                 createTableCommand.ExecuteNonQuery();
             }
@@ -58,7 +58,7 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 }
             }
         }
-        internal static void DeleteAllDataFromTable(SQLiteConnection connection,string tableName)
+        internal static void DeleteAllDataFromTable(SQLiteConnection connection, string tableName)
         {
             using (SQLiteCommand createTableCommand = new SQLiteCommand(
               $"DELETE FROM  {tableName} ", connection))
@@ -92,6 +92,35 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 }
             }
         }
-       
+        internal static Product GetProductById(SQLiteConnection connection, int productId)
+        {
+            using (SQLiteCommand selectDataCommand = new SQLiteCommand($"SELECT * FROM Products WHERE ColumnId = {productId}", connection))
+            {
+                using (SQLiteDataReader reader = selectDataCommand.ExecuteReader())
+                {
+                    Product product = new Product();
+
+                    while (reader.Read())
+                    {
+                        product = new Product
+                        {
+                            ColumnId = Convert.ToInt32(reader["ColumnId"]),
+                            Name = Convert.ToString(reader["Name"]),
+                            Price = Convert.ToDecimal(reader["Price"]),
+                            Quantity = Convert.ToInt32(reader["Quantity"])
+                        };
+                    }
+                    return product != null ? product : null;
+                }
+            }
+        }
+        internal static void DispenseProduct(SQLiteConnection connection, int productId)
+        {
+            Product product = SQLiteCommands.GetProductById(connection, productId);
+            using (SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE Products SET Quantity = {product.Quantity} - 1 WHERE ColumnId = {productId}",connection))
+            {
+                updateCommand.ExecuteNonQuery();
+            }
+        }
     }
 }

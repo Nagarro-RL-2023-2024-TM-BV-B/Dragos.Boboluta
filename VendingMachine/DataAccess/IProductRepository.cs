@@ -6,6 +6,6 @@ namespace Nagarro.VendingMachine.DataAccess
     {
          List<Product> GetAll();
          Product GetByColumn(int columnId);
-
+         void DispenseProduct(Product product);
     }
 }
