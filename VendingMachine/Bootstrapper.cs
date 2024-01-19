@@ -31,7 +31,7 @@ namespace Nagarro.VendingMachine
             // Configure data access
             // --------------------------------------------------------------------------------
 
-            IProductRepository productRepository = new SQLiteProductRepository("");
+            IProductRepository productRepository = new SQLiteProductRepository("Data Source=C:\\Users\\drago\\source\\repos\\SQLiteDB\\vendingdb.db;Version=3;");
 
             // --------------------------------------------------------------------------------
             // Configure use cases

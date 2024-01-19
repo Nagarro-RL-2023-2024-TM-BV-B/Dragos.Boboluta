@@ -13,10 +13,10 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
 
         public SQLiteProductRepository(string connectionStringT)
         {
-            var connectionString = "Data Source=C:\\Users\\drago\\source\\repos\\SQLiteDB\\vendingdb.db;Version=3;";
+
             try
             {
-                connection = new SQLiteConnection(connectionString);
+                connection = new SQLiteConnection(connectionStringT);
                 connection.Open();
                 SQLiteCommands.CreateTable(connection, "Products");
                 var initial = SQLiteCommands.InitialProductsCheck(connection);
