@@ -41,6 +41,7 @@ namespace Nagarro.VendingMachine
             PaymentUseCase paymentUseCase = new PaymentUseCase();
             List<IUseCase> useCases = new List<IUseCase>
             {
+                new AddProductUseCase(),
                 new LookUseCase(productRepository, shelfView),
                 new BuyUseCase(authenticationService, buyView, productRepository,paymentUseCase),
                 new LoginUseCase(authenticationService, loginView),
