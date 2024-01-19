@@ -58,7 +58,40 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 }
             }
         }
-    
+        internal static void DeleteAllDataFromTable(SQLiteConnection connection,string tableName)
+        {
+            using (SQLiteCommand createTableCommand = new SQLiteCommand(
+              $"DELETE FROM  {tableName} ", connection))
+            {
+                createTableCommand.ExecuteNonQuery();
+            }
+        }
+        internal static List<Product> GetProducts(SQLiteConnection connection)
+        {
+            using (SQLiteCommand selectDataCommand = new SQLiteCommand(
+                   "SELECT * FROM Products;",
+                   connection))
+            {
+                using (SQLiteDataReader reader = selectDataCommand.ExecuteReader())
+                {
+                    List<Product> productList = new List<Product>();
+
+                    while (reader.Read())
+                    {
+                        Product product = new Product
+                        {
+                            ColumnId = Convert.ToInt32(reader["ColumnId"]),
+                            Name = Convert.ToString(reader["Name"]),
+                            Price = Convert.ToDecimal(reader["Price"]),
+                            Quantity = Convert.ToInt32(reader["Quantity"])
+                        };
+
+                        productList.Add(product);
+                    }
+                    return productList.Count > 0 ? productList : null;
+                }
+            }
+        }
        
     }
 }

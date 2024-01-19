@@ -9,8 +9,7 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
 {
     internal class SQLiteProductRepository : IProductRepository
     {
-        private SQLiteConnection connection;
-      
+        private readonly SQLiteConnection connection;
 
         public SQLiteProductRepository(string connectionStringT)
         {
@@ -20,6 +19,7 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 connection = new SQLiteConnection(connectionString);
                 connection.Open();
                 SQLiteCommands.CreateTable(connection,"Products");
+                SQLiteCommands.DeleteAllDataFromTable(connection, "Products");
                 SQLiteCommands.AddInitialProducts(connection);
                 connection.Close();
             }
@@ -32,13 +32,25 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
             {
                 connection.Close();
             }
-
-
         }
         public List<Product> GetAll()
         {
-            throw new NotImplementedException();
-
+            try
+            {
+                connection.Open();
+                List<Product> list =  SQLiteCommands.GetProducts(connection);
+                connection.Close();
+                return list;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
+            finally 
+            { 
+                connection.Close(); 
+            }
         }
 
         public Product GetByColumn(int columnId)
