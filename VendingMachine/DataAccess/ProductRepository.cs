@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Nagarro.VendingMachine.Models.ProductModel;
 
 namespace Nagarro.VendingMachine.DataAccess
 {
@@ -30,12 +31,17 @@ namespace Nagarro.VendingMachine.DataAccess
 
 
         };
-        public ProductRepository() 
-        
-        { 
-        
-        
-        
+        public ProductRepository()
+
+        {
+
+
+
+        }
+
+        public void AddProduct(ProductDto product)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void DispenseProduct(Product product)

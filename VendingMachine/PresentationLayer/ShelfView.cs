@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nagarro.VendingMachine.Models.ProductModel;
 
 namespace Nagarro.VendingMachine.PresentationLayer
 {

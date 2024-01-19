@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nagarro.VendingMachine.Authentication;
 using Nagarro.VendingMachine.DataAccess;
+using Nagarro.VendingMachine.Models.ProductModel;
 using Nagarro.VendingMachine.PresentationLayer;
 using Nagarro.VendingMachine.UseCases.Payment;
 using Nagarro.VendingMachine.UseCases.PaymentUse;

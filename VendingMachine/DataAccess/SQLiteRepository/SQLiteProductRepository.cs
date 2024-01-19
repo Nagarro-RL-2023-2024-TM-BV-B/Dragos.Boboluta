@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Data.SQLite;
+using System.Security.Policy;
+using Nagarro.VendingMachine.Models.ProductModel;
 
 
 namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
@@ -39,6 +41,28 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
             {
                 connection.Close();
             }
+        }
+
+        public void AddProduct(ProductDto product)
+        {
+
+            try
+            {
+                connection.Open();
+                SQLiteCommands.AddProduct(connection, product);
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
+            finally
+            {
+
+                connection.Close();
+            }
+
         }
 
         public void DispenseProduct(Product product)

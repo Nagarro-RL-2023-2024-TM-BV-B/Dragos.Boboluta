@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Nagarro.VendingMachine.Models.ProductModel;
 
 namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
 {
@@ -130,6 +131,19 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
             using (SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE Products SET Quantity = {product.Quantity} - 1 WHERE ColumnId = {productId}", connection))
             {
                 updateCommand.ExecuteNonQuery();
+            }
+        }
+        internal static void AddProduct(SQLiteConnection connection, ProductDto product)
+        {
+            using (SQLiteCommand insertDataCommand = new SQLiteCommand(
+                    $"INSERT INTO Products (Name, Price, Quantity) VALUES (@Name, @Price, @Quantity);",
+                    connection))
+            {
+                insertDataCommand.Parameters.AddWithValue("@Name", product.Name);
+                insertDataCommand.Parameters.AddWithValue("@Price", product.Price);
+                insertDataCommand.Parameters.AddWithValue("@Quantity", product.Quantity);
+
+                insertDataCommand.ExecuteNonQuery();
             }
         }
     }

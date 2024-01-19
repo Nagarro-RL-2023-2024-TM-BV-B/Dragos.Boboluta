@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Nagarro.VendingMachine.Authentication;
+using Nagarro.VendingMachine.DataAccess;
+using Nagarro.VendingMachine.Models.ProductModel;
+using Nagarro.VendingMachine.PresentationLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +12,26 @@ namespace Nagarro.VendingMachine.UseCases
 {
     internal class AddProductUseCase : IUseCase
     {
-        public string Name => "Add";
+        AddView addView;
+        IProductRepository productRepository;
+        AuthenticationService authenticationService;
+        public string Name => "add";
 
-        public string Description => "Add new product use case";
+        public string Description => "Add new product ";
 
-        public bool CanExecute => true;
+        public bool CanExecute => authenticationService.IsUserAuthenticated;
 
+        internal AddProductUseCase(AddView addView, IProductRepository productRepository, AuthenticationService authenticationService)
+        {
+            this.addView = addView ?? throw new ArgumentNullException(nameof(addView));
+            this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
+        }
         public void Execute()
         {
-            throw new NotImplementedException();
+            ProductDto product = addView.RequestProduct();
+            productRepository.AddProduct(product);
+
         }
     }
 }

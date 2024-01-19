@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Nagarro.VendingMachine.Models.ProductModel;
 
 namespace Nagarro.VendingMachine.DataAccess
 {
@@ -7,5 +8,6 @@ namespace Nagarro.VendingMachine.DataAccess
          List<Product> GetAll();
          Product GetByColumn(int columnId);
          void DispenseProduct(Product product);
+         void AddProduct(ProductDto product);
     }
 }

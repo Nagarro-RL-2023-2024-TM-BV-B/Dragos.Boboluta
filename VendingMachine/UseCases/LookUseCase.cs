@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Nagarro.VendingMachine.DataAccess;
+using Nagarro.VendingMachine.Models.ProductModel;
 using Nagarro.VendingMachine.PresentationLayer;
 
 namespace Nagarro.VendingMachine.UseCases
