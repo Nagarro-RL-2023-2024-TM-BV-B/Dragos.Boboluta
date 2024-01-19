@@ -42,7 +42,23 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 createTableCommand.ExecuteNonQuery();
             }
         }
+        internal static void AddInitialProducts(SQLiteConnection connection)
+        {
+            foreach (Product product in Products)
+            {
+                using (SQLiteCommand insertDataCommand = new SQLiteCommand(
+                    "INSERT INTO Products (Name, Price, Quantity) VALUES (@Name, @Price, @Quantity);",
+                    connection))
+                {
+                    insertDataCommand.Parameters.AddWithValue("@Name", product.Name);
+                    insertDataCommand.Parameters.AddWithValue("@Price", product.Price);
+                    insertDataCommand.Parameters.AddWithValue("@Quantity", product.Quantity);
 
+                    insertDataCommand.ExecuteNonQuery();
+                }
+            }
+        }
+    
        
     }
 }

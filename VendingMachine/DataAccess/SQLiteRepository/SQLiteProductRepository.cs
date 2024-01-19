@@ -20,6 +20,7 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 connection = new SQLiteConnection(connectionString);
                 connection.Open();
                 SQLiteCommands.CreateTable(connection,"Products");
+                SQLiteCommands.AddInitialProducts(connection);
                 connection.Close();
             }
             catch (Exception ex)
