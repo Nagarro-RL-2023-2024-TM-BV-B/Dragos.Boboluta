@@ -15,7 +15,8 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
                 connection = new SQLiteConnection(connectionStringT);
                 connection.Open();
                 SQLiteCommands.CreateTable(connection, "Products");
-                if (SQLiteCommands.InitialProductsCheck(connection))
+                var initial = SQLiteCommands.InitialProductsCheck(connection);
+                if (initial)
                 {
                     connection.Close();
                 }

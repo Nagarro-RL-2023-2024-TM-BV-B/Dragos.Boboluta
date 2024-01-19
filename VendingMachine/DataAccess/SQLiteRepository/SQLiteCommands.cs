@@ -55,11 +55,10 @@ namespace Nagarro.VendingMachine.DataAccess.SQLiteRepository
         }
         internal static void DeleteAllDataFromTable(SQLiteConnection connection, string tableName)
         {
-            using (SQLiteCommand createTableCommand = new SQLiteCommand(
-              $"DELETE FROM  @TableName ", connection))
+            using (SQLiteCommand deleteDataCommand = new SQLiteCommand(
+              $"DELETE FROM  {tableName} ", connection))
             {
-                createTableCommand.Parameters.AddWithValue(tableName, tableName);
-                createTableCommand.ExecuteNonQuery();
+                deleteDataCommand.ExecuteNonQuery();
             }
         }
         internal static bool InitialProductsCheck(SQLiteConnection connection)
