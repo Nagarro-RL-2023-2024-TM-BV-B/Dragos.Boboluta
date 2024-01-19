@@ -30,7 +30,7 @@ namespace Nagarro.VendingMachine
             // Configure data access
             // --------------------------------------------------------------------------------
 
-            IProductRepository productRepository = new ProductRepository();
+            IProductRepository productRepository = new SQLiteProductRepository("");
 
             // --------------------------------------------------------------------------------
             // Configure use cases
