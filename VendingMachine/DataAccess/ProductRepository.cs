@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Nagarro.VendingMachine.Models.ProductModel;
 
 namespace Nagarro.VendingMachine.DataAccess
@@ -41,7 +42,16 @@ namespace Nagarro.VendingMachine.DataAccess
 
         public void AddProduct(ProductDto product)
         {
-            throw new System.NotImplementedException();
+            Product lastProduct = Products.ElementAt(Products.Count - 1);
+            int lastIndex = lastProduct.ColumnId;
+            Product newProduct = new Product()
+            {
+                Name = product.Name,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                ColumnId = lastIndex + 1,
+            };
+            Products.Add(newProduct);
         }
 
         public void DispenseProduct(Product product)
