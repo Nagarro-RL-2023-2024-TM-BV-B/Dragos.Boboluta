@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nagarro.VendingMachine.Authentication;
 using Nagarro.VendingMachine.DataAccess;
+using Nagarro.VendingMachine.DataAccess.SQLiteRepository;
 using Nagarro.VendingMachine.PresentationLayer;
 using Nagarro.VendingMachine.UseCases;
 using Nagarro.VendingMachine.UseCases.PaymentUse;
@@ -30,7 +31,7 @@ namespace Nagarro.VendingMachine
             // Configure data access
             // --------------------------------------------------------------------------------
 
-            ProductRepository productRepository = new ProductRepository();
+            IProductRepository productRepository = new SQLiteProductRepository("Data Source=C:\\Users\\drago\\source\\repos\\SQLiteDB\\vendingdb.db;Version=3;");
 
             // --------------------------------------------------------------------------------
             // Configure use cases
@@ -38,8 +39,10 @@ namespace Nagarro.VendingMachine
 
             AuthenticationService authenticationService = new AuthenticationService();
             PaymentUseCase paymentUseCase = new PaymentUseCase();
+            AddView addView = new AddView();
             List<IUseCase> useCases = new List<IUseCase>
             {
+                new AddProductUseCase(addView,productRepository,authenticationService),
                 new LookUseCase(productRepository, shelfView),
                 new BuyUseCase(authenticationService, buyView, productRepository,paymentUseCase),
                 new LoginUseCase(authenticationService, loginView),

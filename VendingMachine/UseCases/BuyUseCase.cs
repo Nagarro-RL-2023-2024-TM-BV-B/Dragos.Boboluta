@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nagarro.VendingMachine.Authentication;
 using Nagarro.VendingMachine.DataAccess;
+using Nagarro.VendingMachine.Models.ProductModel;
 using Nagarro.VendingMachine.PresentationLayer;
 using Nagarro.VendingMachine.UseCases.Payment;
 using Nagarro.VendingMachine.UseCases.PaymentUse;
@@ -13,7 +14,7 @@ namespace Nagarro.VendingMachine.UseCases
     {
         private readonly AuthenticationService authenticationService;
         private readonly BuyView buyView;
-        private readonly ProductRepository productRepository;
+        private readonly IProductRepository productRepository;
         private readonly PaymentUseCase paymentUseCase;
 
         public string Name => "buy";
@@ -22,7 +23,7 @@ namespace Nagarro.VendingMachine.UseCases
 
         public bool CanExecute => !authenticationService.IsUserAuthenticated;
 
-        public BuyUseCase(AuthenticationService authenticationService, BuyView buyView, ProductRepository productRepository, PaymentUseCase paymentUseCase)
+        public BuyUseCase(AuthenticationService authenticationService, BuyView buyView, IProductRepository productRepository, PaymentUseCase paymentUseCase)
 
         {
             this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
@@ -56,7 +57,7 @@ namespace Nagarro.VendingMachine.UseCases
 
             paymentUseCase.Execute((float)product.Price);
 
-            product.Quantity--;
+            productRepository.DispenseProduct(product);
 
             buyView.DispenseProduct(product.Name);
         }

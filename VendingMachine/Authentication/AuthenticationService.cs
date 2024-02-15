@@ -6,7 +6,7 @@
 
         public void Login(string password)
         {
-            if (password == "supercalifragilisticexpialidocious")
+            if (password == "parola")
                 IsUserAuthenticated = true;
             else
                 throw new InvalidPasswordException();

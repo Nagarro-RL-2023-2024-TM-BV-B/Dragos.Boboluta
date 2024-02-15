@@ -1,4 +1,4 @@
-﻿namespace Nagarro.VendingMachine
+﻿namespace Nagarro.VendingMachine.Models.ProductModel
 {
     internal class Product
     {
