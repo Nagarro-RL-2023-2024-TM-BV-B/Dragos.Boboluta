@@ -32,14 +32,6 @@ namespace Nagarro.VendingMachine.DataAccess
 
 
         };
-        public ProductRepository()
-
-        {
-
-
-
-        }
-
         public void AddProduct(ProductDto product)
         {
             Product lastProduct = Products.ElementAt(Products.Count - 1);
